@@ -7,16 +7,17 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import java.time.*;
 
-public class LoginController implements Initializable {
+public class LoginController {
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Initialized");
-    }
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        System.out.println("Initialized");
+//    }
 
     public static void main(String[] args) {
         Locale currentLocale = Locale.getDefault();
-        currentLocale = Locale.FRANCE;
+        //currentLocale = Locale.FRANCE;
+        Locale.setDefault(Locale.FRANCE);
         System.out.println("I am currently " + currentLocale);
     }
 
