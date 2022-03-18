@@ -42,7 +42,7 @@
       <Label layoutX="165.0" layoutY="143.0" text="Username:" />
       <Label layoutX="165.0" layoutY="200.0" text="Password:" />
       <Label layoutX="392.0" layoutY="332.0" text="Location:" />
-      <Label layoutX="474.0" layoutY="332.0" text="America" />
+      <Label fx:id="locationAlertLabel" layoutX="474.0" layoutY="332.0" text="America" />
       <TextField layoutX="228.0" layoutY="139.0" />
       <TextField layoutX="228.0" layoutY="196.0" />
    </children>
