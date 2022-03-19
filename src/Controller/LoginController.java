@@ -15,10 +15,13 @@ public class LoginController {
 //    }
 
     public static void main(String[] args) {
+
+        ResourceBundle rb = ResourceBundle.getBundle("src/translator", Locale.getDefault());
         Locale currentLocale = Locale.getDefault();
         //currentLocale = Locale.FRANCE;
-        Locale.setDefault(Locale.FRANCE);
-        System.out.println("I am currently " + currentLocale);
+        //Locale.setDefault(Locale.FRANCE);
+        System.out.println(rb.getString("Welcome!") + " " + rb.getString("Please") + " " +
+                rb.getString("log-in") + " " + rb.getString("to") + " " + rb.getString("continue") );
     }
 
 }
