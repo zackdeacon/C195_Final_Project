@@ -22,7 +22,8 @@ public class LoginController implements Initializable{
     @FXML
     public Label passwordLabel;
 
-
+    @FXML
+    public Label locationLabel;
 
 
     @Override
@@ -32,15 +33,18 @@ public class LoginController implements Initializable{
     }
 
     public void setLanguage() {
-       Locale.setDefault(new Locale("fr"));
+       Locale.setDefault(new Locale("fr", "FR"));
         try{
             ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
         welcomeLabel.setText(rb.getString("Welcome!") );
         userNameLabel.setText(rb.getString("username"));
         passwordLabel.setText(rb.getString("password"));
-        locationAlertLabel.setText("France");
+        locationLabel.setText(rb.getString("Location"));
+        locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
+
     } catch (Exception e){
         System.out.println("English!");
+        locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
     }
    }
 
