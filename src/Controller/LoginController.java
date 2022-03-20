@@ -1,5 +1,7 @@
 package Controller;
 
+import Database.UserDao;
+import Model.user;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -8,6 +10,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.time.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginController implements Initializable{
     @FXML
@@ -36,6 +40,7 @@ public class LoginController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialized");
         setLanguage();
+        System.out.println(userCheck().getUserName());
     }
 
     public void setLanguage() {
@@ -62,6 +67,15 @@ public class LoginController implements Initializable{
 
     public void exitProgram() {
         System.exit(0);
+    }
+
+    public user userCheck() {
+        try{
+           return UserDao.getUser("test");
+        } catch(Exception ex){
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }
