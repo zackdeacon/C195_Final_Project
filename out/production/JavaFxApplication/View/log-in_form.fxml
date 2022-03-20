@@ -32,9 +32,8 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
@@ -45,5 +44,7 @@
       <Label fx:id="locationAlertLabel" layoutX="474.0" layoutY="332.0" text="America" />
       <TextField layoutX="228.0" layoutY="139.0" />
       <TextField layoutX="228.0" layoutY="196.0" />
+      <Button layoutX="440.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginAttempt" text="Log-in" fx:id="loginButton"/>
+      <Button layoutX="375.0" layoutY="270.0" mnemonicParsing="false" onAction="#exitProgram" text="Close" fx:id="exitButton"/>
    </children>
 </AnchorPane>

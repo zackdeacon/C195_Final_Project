@@ -25,6 +25,12 @@ public class LoginController implements Initializable{
     @FXML
     public Label locationLabel;
 
+    @FXML
+    public Button loginButton;
+
+    @FXML
+    public Button exitButton;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -33,13 +39,15 @@ public class LoginController implements Initializable{
     }
 
     public void setLanguage() {
-       Locale.setDefault(new Locale("fr", "FR"));
+        Locale.setDefault(new Locale("fr", "FR"));
         try{
             ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
         welcomeLabel.setText(rb.getString("Welcome!") );
         userNameLabel.setText(rb.getString("username"));
         passwordLabel.setText(rb.getString("password"));
         locationLabel.setText(rb.getString("Location"));
+        loginButton.setText(rb.getString("Log-in"));
+        exitButton.setText(rb.getString("Exit"));
         locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
 
     } catch (Exception e){
@@ -47,5 +55,13 @@ public class LoginController implements Initializable{
         locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
     }
    }
+
+   public void loginAttempt() {
+        System.out.println("log-in attempted!");
+   }
+
+    public void exitProgram() {
+        System.exit(0);
+    }
 
 }
