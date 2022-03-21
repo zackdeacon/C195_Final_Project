@@ -2,10 +2,18 @@ package Controller;
 
 import Database.UserDao;
 import Model.user;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
@@ -35,18 +43,24 @@ public class LoginController implements Initializable{
     @FXML
     public Button exitButton;
 
+    @FXML
+    public TextField userNameText;
+
+    @FXML
+    public TextField passwordText;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialized");
         setLanguage();
-        System.out.println(userCheck().getUserName());
     }
 
     public void setLanguage() {
-        Locale.setDefault(new Locale("fr", "FR"));
+      // Locale.setDefault(new Locale("fr", "FR"));
         try{
-            ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
+           ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
         welcomeLabel.setText(rb.getString("Welcome!") );
         userNameLabel.setText(rb.getString("username"));
         passwordLabel.setText(rb.getString("password"));
@@ -56,26 +70,80 @@ public class LoginController implements Initializable{
         locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
 
     } catch (Exception e){
-        System.out.println("English!");
         locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
     }
    }
 
-   public void loginAttempt() {
-        System.out.println("log-in attempted!");
+   public void loginAttempt(ActionEvent actionEvent) throws IOException {
+        String enteredName = userNameText.getText().toLowerCase();
+        String enteredPassword = passwordText.getText();
+       try{
+           user activeUser = UserDao.getUser(enteredName);
+           if(activeUser == null && Locale.getDefault().getDisplayCountry().equals("France")) {
+               alertToDisplay(1);
+           } else if(activeUser == null && Locale.getDefault().getDisplayCountry().equals("United States")){
+               alertToDisplay(2);
+           }
+            if(activeUser.getPassword().equals(enteredPassword)){
+                System.out.println("You're in!");
+                Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
+                Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 900, 650);
+                stage.setTitle("Customer Landing Page");
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                if(Locale.getDefault().getDisplayCountry().equals("France")) {
+                    alertToDisplay(3);
+                } else if(Locale.getDefault().getDisplayCountry().equals("United States")){
+                    alertToDisplay(4);
+                }
+            }
+       } catch(Exception ex){
+           Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+       }
    }
 
     public void exitProgram() {
         System.exit(0);
     }
 
-    public user userCheck() {
+    public static void alertToDisplay(int alertNum){
         try{
-           return UserDao.getUser("test");
-        } catch(Exception ex){
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
+
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+
+        switch(alertNum){
+            case 1:
+                errorAlert.setTitle(rb.getString("E"));
+                errorAlert.setHeaderText(rb.getString("Fail"));
+                errorAlert.setContentText(rb.getString("Error"));
+                errorAlert.showAndWait();
+                break;
+            case 2:
+                errorAlert.setTitle(rb.getString("head"));
+                errorAlert.setHeaderText(rb.getString("LI"));
+                errorAlert.setContentText(rb.getString("body"));
+                errorAlert.showAndWait();
+                break;
+            case 3:
+                errorAlert.setTitle(rb.getString("E"));
+                errorAlert.setHeaderText(rb.getString("Fail"));
+                errorAlert.setContentText(rb.getString("wrongPass"));
+                errorAlert.showAndWait();
+                break;
+            case 4:
+                errorAlert.setTitle(rb.getString("head"));
+                errorAlert.setHeaderText(rb.getString("LI"));
+                errorAlert.setContentText(rb.getString("password"));
+                errorAlert.showAndWait();
+                break;
         }
-        return null;
+        } catch(Exception e){
+            System.out.println("wasteful");
+        }
     }
 
 }
