@@ -108,6 +108,15 @@ public class LoginController implements Initializable{
         System.exit(0);
     }
 
+    public void createUser(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/create_user_form.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 600);
+        stage.setTitle("Customer Landing Page");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void alertToDisplay(int alertNum){
         try{
             ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());

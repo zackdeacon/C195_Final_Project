@@ -46,5 +46,6 @@
       <TextField fx:id="passwordText" layoutX="228.0" layoutY="196.0" />
       <Button layoutX="440.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginAttempt" text="Log-in" fx:id="loginButton"/>
       <Button layoutX="375.0" layoutY="270.0" mnemonicParsing="false" onAction="#exitProgram" text="Close" fx:id="exitButton"/>
+      <Button layoutX="100.0" layoutY="270.0" mnemonicParsing="false" onAction="#createUser" text="Create User" fx:id="createButton"/>
    </children>
 </AnchorPane>

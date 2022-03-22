@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class UserDao {
 
     public static user getUser(String userName) throws SQLException, Exception {
-        JDBC.makeConnection();
+        JDBC.getConnection();
             String sqlStmt = "SELECT * FROM users WHERE User_Name = '" + userName + "'";
             Query.makeQuery(sqlStmt);
             user userResult;
@@ -20,9 +20,15 @@ public class UserDao {
                 userResult = new user(userID, userNAME, password);
                 return userResult;
             }
-            JDBC.closeConnection();
+
             return null;
 
+    }
+
+    public static void createUser(String userName, String password) throws SQLException, Exception {
+        //JDBC.getConnection();
+        String sqlStmt = "INSERT INTO users (User_Name, Password, Create_Date, Created_By, Last_Update, Last_Updated_By) VALUES('" + userName + "','" + password + "')";
+        System.out.println(sqlStmt);
     }
 
 }
