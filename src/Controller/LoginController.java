@@ -12,12 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
-import java.time.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,7 +86,7 @@ public class LoginController implements Initializable{
                 System.out.println("You're in!");
                 Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
                 Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 900, 650);
+                Scene scene = new Scene(root, 1150, 750);
                 stage.setTitle("Customer Landing Page");
                 stage.setScene(scene);
                 stage.show();
@@ -100,7 +98,7 @@ public class LoginController implements Initializable{
                 }
             }
        } catch(Exception ex){
-           Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(customerInfoController.class.getName()).log(Level.SEVERE, null, ex);
        }
    }
 
