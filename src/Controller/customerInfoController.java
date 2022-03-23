@@ -1,6 +1,9 @@
 package Controller;
 
 import Database.CustomerDao;
+import Model.customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -55,15 +58,19 @@ public class customerInfoController implements Initializable {
     @FXML
     public Label userLabel;
 
+    ObservableList<customer> customerList = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialized");
         userLabel.setText(activeUser.getUserName());
         try {
-            CustomerDao.getAllCustomer();
+            CustomerDao.getAllCustomer(customerList);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void exitProgram() {

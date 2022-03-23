@@ -1,14 +1,17 @@
 package Database;
 
 import Model.customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerDao {
 
-    public static customer getAllCustomer() throws SQLException, Exception {
+    public static customer getAllCustomer(ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();
+
         String sqlStmt = "SELECT * from customers JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID;";
         Query.makeQuery(sqlStmt);
         customer customerResult;
@@ -21,8 +24,8 @@ public class CustomerDao {
             String Phone = result.getString("Phone");
             int DivisionID = result.getInt("Division_ID");
             customerResult = new customer(customerID, customerNAME, Address, PostalCode, Phone, DivisionID);
-            System.out.println(customerResult.getCustomer_Name());
-            return customerResult;
+            //System.out.println(customerResult.getCustomer_Name());
+            list.addAll(customerResult);
         }
 
         return null;
