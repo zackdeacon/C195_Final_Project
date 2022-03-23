@@ -47,7 +47,7 @@ public class LoginController implements Initializable{
     @FXML
     public TextField passwordText;
 
-
+    static user activeUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,7 +76,7 @@ public class LoginController implements Initializable{
         String enteredName = userNameText.getText().toLowerCase();
         String enteredPassword = passwordText.getText();
        try{
-           user activeUser = UserDao.getUser(enteredName);
+          activeUser = UserDao.getUser(enteredName);
            if(activeUser == null && Locale.getDefault().getDisplayCountry().equals("France")) {
                alertToDisplay(1);
            } else if(activeUser == null && Locale.getDefault().getDisplayCountry().equals("United States")){

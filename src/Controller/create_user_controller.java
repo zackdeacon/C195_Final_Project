@@ -31,6 +31,7 @@ public class create_user_controller implements Initializable {
 
     public void makeUser(ActionEvent actionEvent) throws Exception {
         UserDao.createUser(userNameText.getText(), passwordText.getText());
+
         Parent root = FXMLLoader.load(getClass().getResource("/view/log-in_form.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);

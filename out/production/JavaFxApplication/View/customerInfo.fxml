@@ -10,27 +10,27 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.customerInfoController">
    <children>
-      <TableView layoutX="14.0" layoutY="170.0" prefHeight="360.0" prefWidth="652.0">
+      <TableView fx:id="customerTable" layoutX="14.0" layoutY="170.0" prefHeight="360.0" prefWidth="652.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Cust ID" />
-          <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="200.0" text="address" />
-            <TableColumn prefWidth="75.0" text="postal code" />
-            <TableColumn prefWidth="75.0" text="Phone" />
-            <TableColumn prefWidth="75.0" text="Division" />
-            <TableColumn prefWidth="75.0" text="Country" />
+          <TableColumn fx:id="customerID" prefWidth="75.0" text="Cust ID" />
+          <TableColumn fx:id="customerName" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="customerAddress" prefWidth="200.0" text="address" />
+            <TableColumn fx:id="customerPostalCode" prefWidth="75.0" text="postal code" />
+            <TableColumn fx:id="customerPhone" prefWidth="75.0" text="Phone" />
+            <TableColumn fx:id="customerDivision" prefWidth="75.0" text="Division" />
+            <TableColumn fx:id="customerCountry" prefWidth="75.0" text="Country" />
         </columns>
       </TableView>
       <Label layoutX="497.0" layoutY="62.0" text="Welcome:" />
-      <Label layoutX="562.0" layoutY="62.0" prefHeight="17.0" prefWidth="165.0" text="Ghost" />
+      <Label fx:id="userLabel" layoutX="562.0" layoutY="62.0" prefHeight="17.0" prefWidth="165.0" text="Ghost" />
       <Button layoutX="987.0" layoutY="505.0" mnemonicParsing="false" text="Add New User" />
       <Button layoutX="1028.0" layoutY="598.0" mnemonicParsing="false" text="Close" onAction="#exitProgram"/>
       <Button layoutX="940.0" layoutY="338.0" mnemonicParsing="false" text="Update Customer" />
       <Button layoutX="836.0" layoutY="505.0" mnemonicParsing="false" text="Delete Customer" />
-      <TextField layoutX="727.0" layoutY="170.0" prefHeight="25.0" prefWidth="323.0" />
-      <TextField layoutX="727.0" layoutY="210.0" prefHeight="25.0" prefWidth="323.0" />
-      <TextField layoutX="727.0" layoutY="250.0" prefHeight="25.0" prefWidth="323.0" />
-      <TextField layoutX="727.0" layoutY="290.0" prefHeight="25.0" prefWidth="323.0" />
+      <TextField fx:id="textName" layoutX="727.0" layoutY="170.0" prefHeight="25.0" prefWidth="323.0" />
+      <TextField fx:id="textAddress" layoutX="727.0" layoutY="210.0" prefHeight="25.0" prefWidth="323.0" />
+      <TextField fx:id="textPostalCode" layoutX="727.0" layoutY="250.0" prefHeight="25.0" prefWidth="323.0" />
+      <TextField fx:id="textPhone" layoutX="727.0" layoutY="290.0" prefHeight="25.0" prefWidth="323.0" />
       <Button layoutX="701.0" layoutY="505.0" mnemonicParsing="false" text="Appointments" />
       <Button layoutX="915.0" layoutY="598.0" mnemonicParsing="false" text="Reports" />
    </children>
