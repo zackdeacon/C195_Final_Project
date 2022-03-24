@@ -147,6 +147,12 @@ public class LoginController implements Initializable{
                 errorAlert.setContentText(rb.getString("password"));
                 errorAlert.showAndWait();
                 break;
+            case 5:
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("No Customer Selected");
+                errorAlert.setContentText("Please select a customer from the list at the left to continue");
+                errorAlert.showAndWait();
+                break;
         }
         } catch(Exception e){
             System.out.println("wasteful");

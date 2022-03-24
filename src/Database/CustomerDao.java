@@ -21,14 +21,21 @@ public class CustomerDao {
             String Address = result.getString("Address");
             String postal_Code = result.getString("Postal_Code");
             String phone = result.getString("Phone");
-            int division_ID = result.getInt("Division_ID");
-            customerResult = new customer(customer_ID, customer_Name, Address, postal_Code, phone, division_ID);
+            String division = result.getString("Division");
+            String country = result.getString("Country");
+            customerResult = new customer(customer_ID, customer_Name, Address, postal_Code, phone, division, country);
             //System.out.println(customerResult.getCustomer_Name());
             list.addAll(customerResult);
         }
 
         return list;
 
+    }
+
+    public static void updateCustomerSQL(int ID, String name, String address, String postalCode, String phone, String user) {
+        JDBC.getConnection();
+        String sqlStmt = "UPDATE customers SET Customer_Name = '" + name + "', Address = '" + address + "', Postal_Code = '" + postalCode + "', Phone = '" + phone + "', Last_Update = sysdate(), Last_Updated_By = '" + user + "' WHERE Customer_ID = '" + ID + "';";
+        Query.makeQuery(sqlStmt);
     }
 
 }

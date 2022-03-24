@@ -60,6 +60,8 @@ public class customerInfoController implements Initializable {
     public Label userLabel;
 
     ObservableList<customer> customerList = FXCollections.observableArrayList();
+    customer selectedCustomer;
+    int selectedID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,13 +73,42 @@ public class customerInfoController implements Initializable {
             customerAddress.setCellValueFactory(new PropertyValueFactory<>("Address"));
             customerPostalCode.setCellValueFactory(new PropertyValueFactory<>("postal_Code"));
             customerPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-            customerDivision.setCellValueFactory(new PropertyValueFactory<>("division_ID"));
-//            customerCountry.setCellValueFactory(new PropertyValueFactory<>("Customer_Country"));
+            customerDivision.setCellValueFactory(new PropertyValueFactory<>("division"));
+            customerCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
             customerTable.setItems(CustomerDao.getAllCustomer(customerList));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+    public void updateCustomer() {
+       selectedCustomer = (customer) customerTable.getSelectionModel().getSelectedItem();
+           textName.setText(selectedCustomer.getCustomer_Name());
+           textAddress.setText(selectedCustomer.getAddress());
+           textPostalCode.setText(selectedCustomer.getPostal_Code());
+           textPhone.setText(selectedCustomer.getPhone());
+           selectedID = selectedCustomer.getCustomer_ID();
+    }
+
+    public void completeUpdatedCustomer() {
+        if(selectedCustomer == null){
+            alertToDisplay(5);
+        } else {
+            CustomerDao.updateCustomerSQL(selectedID, textName.getText(), textAddress.getText(), textPostalCode.getText(), textPhone.getText(), activeUser.getUserName());
+            try {
+                customerTable.getItems().clear();
+                customerName.setCellValueFactory(new PropertyValueFactory<>("customer_Name"));
+                customerID.setCellValueFactory(new PropertyValueFactory<>("customer_ID"));
+                customerAddress.setCellValueFactory(new PropertyValueFactory<>("Address"));
+                customerPostalCode.setCellValueFactory(new PropertyValueFactory<>("postal_Code"));
+                customerPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+                customerDivision.setCellValueFactory(new PropertyValueFactory<>("division"));
+                customerCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
+                customerTable.setItems(CustomerDao.getAllCustomer(customerList));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void exitProgram() {
