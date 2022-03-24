@@ -12,7 +12,7 @@
    <children>
       <TableView fx:id="customerTable" layoutX="14.0" layoutY="170.0" prefHeight="360.0" prefWidth="652.0">
         <columns>
-          <TableColumn fx:id="customerID" prefWidth="75.0" text="Cust ID" />
+          <TableColumn fx:id="customerID" prefWidth="75.0" text="Customer ID" />
           <TableColumn fx:id="customerName" prefWidth="75.0" text="Name" />
             <TableColumn fx:id="customerAddress" prefWidth="200.0" text="address" />
             <TableColumn fx:id="customerPostalCode" prefWidth="75.0" text="postal code" />
