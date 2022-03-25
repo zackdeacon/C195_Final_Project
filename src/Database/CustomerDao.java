@@ -6,7 +6,10 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 public class CustomerDao {
+
 
     public static ObservableList getAllCustomer(ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();
@@ -37,5 +40,6 @@ public class CustomerDao {
         String sqlStmt = "UPDATE customers SET Customer_Name = '" + name + "', Address = '" + address + "', Postal_Code = '" + postalCode + "', Phone = '" + phone + "', Last_Update = sysdate(), Last_Updated_By = '" + user + "' WHERE Customer_ID = '" + ID + "';";
         Query.makeQuery(sqlStmt);
     }
+
 
 }

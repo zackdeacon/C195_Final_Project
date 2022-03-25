@@ -23,7 +23,7 @@
       </TableView>
       <Label layoutX="497.0" layoutY="62.0" text="Welcome:" />
       <Label fx:id="userLabel" layoutX="562.0" layoutY="62.0" prefHeight="17.0" prefWidth="165.0" text="Ghost" />
-      <Button layoutX="987.0" layoutY="505.0" mnemonicParsing="false" text="Add New User" />
+      <Button layoutX="987.0" layoutY="505.0" mnemonicParsing="false" text="Add New User" onAction="#goToAddCustomer"/>
       <Button layoutX="1028.0" layoutY="598.0" mnemonicParsing="false" text="Close" onAction="#exitProgram"/>
       <Button layoutX="940.0" layoutY="338.0" mnemonicParsing="false" text="Update Customer" onAction="#completeUpdatedCustomer"/>
       <Button layoutX="836.0" layoutY="505.0" mnemonicParsing="false" text="Delete Customer" />

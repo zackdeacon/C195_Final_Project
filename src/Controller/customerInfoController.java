@@ -4,14 +4,21 @@ import Database.CustomerDao;
 import Model.customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -59,13 +66,14 @@ public class customerInfoController implements Initializable {
     @FXML
     public Label userLabel;
 
+    public static int newID;
+
     ObservableList<customer> customerList = FXCollections.observableArrayList();
     customer selectedCustomer;
     int selectedID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Initialized");
         userLabel.setText(activeUser.getUserName());
         try {
             customerName.setCellValueFactory(new PropertyValueFactory<>("customer_Name"));
@@ -76,6 +84,7 @@ public class customerInfoController implements Initializable {
             customerDivision.setCellValueFactory(new PropertyValueFactory<>("division"));
             customerCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
             customerTable.setItems(CustomerDao.getAllCustomer(customerList));
+            newID = customerList.get(customerList.size()-1).getCustomer_ID() + 1;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,6 +118,15 @@ public class customerInfoController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void goToAddCustomer(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/add_customer_form.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 900, 500);
+        stage.setTitle("Add Customer Page");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void exitProgram() {
