@@ -41,5 +41,11 @@ public class CustomerDao {
         Query.makeQuery(sqlStmt);
     }
 
+    public static void createCustomerSQL(int customerID, int divisionID, String name, String address, String postalCode, String phone, String user) {
+        JDBC.getConnection();
+        String sqlStmt = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES ('"+ name +"', '"+ address +"', '"+ postalCode +"','"+ phone +"', sysdate(), '"+ user +"', sysdate(), '"+ user +"', "+ divisionID +");";
+        Query.makeQuery(sqlStmt);
+    }
+
 
 }
