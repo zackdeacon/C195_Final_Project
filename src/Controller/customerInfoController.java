@@ -1,7 +1,11 @@
 package Controller;
 
 import Database.CustomerDao;
+import Database.countryDao;
+import Database.divisionDao;
+import Model.country;
 import Model.customer;
+import Model.division;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,10 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -27,8 +28,14 @@ import static Controller.LoginController.activeUser;
 
 public class customerInfoController implements Initializable {
 
+    ObservableList<country> countryOptions = FXCollections.observableArrayList();
+    ObservableList<division> divisionOptions = FXCollections.observableArrayList();
+
     @FXML
     public TextField textName;
+
+    @FXML
+    public TextField textID;
 
     @FXML
     public TextField textAddress;
@@ -66,6 +73,12 @@ public class customerInfoController implements Initializable {
     @FXML
     public Label userLabel;
 
+    @FXML
+    public ComboBox<country> updateCountry;
+
+    @FXML
+    public ComboBox<division> updateDivision;
+
     public static int newID;
 
     ObservableList<customer> customerList = FXCollections.observableArrayList();
@@ -97,7 +110,33 @@ public class customerInfoController implements Initializable {
            textPostalCode.setText(selectedCustomer.getPostal_Code());
            textPhone.setText(selectedCustomer.getPhone());
            selectedID = selectedCustomer.getCustomer_ID();
+           textID.setText(String.valueOf(selectedID));
+           try{
+               updateCountry.getItems().clear();
+               updateCountry.setItems(countryDao.getAllCountries(countryOptions));
+               updateDivision.getItems().clear();
+               updateDivision.setItems(divisionDao.getAllDivision(divisionOptions, selectedCustomer.getCountryID()));
+               for(country s : updateCountry.getItems()){
+                   if(selectedCustomer.getCountryID() == s.getCountryID()){
+                       updateCountry.setValue(s);
+                       break;
+                   }
+               }
+               for(division d : updateDivision.getItems()){
+                   if(selectedCustomer.getDivisionID() == d.getDivisionID()){
+                       updateDivision.setValue(d);
+                       break;
+                   }
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
     }
+
+        //TODO:
+        //Create onAction for when yuo change country; it needs to update divisions list
+        //create exception to not allow for null selection of division
+        //update sql command to include updating the country and division when submitting update
 
     public void completeUpdatedCustomer() {
         if(selectedCustomer == null){

@@ -26,7 +26,9 @@ public class CustomerDao {
             String phone = result.getString("Phone");
             String division = result.getString("Division");
             String country = result.getString("Country");
-            customerResult = new customer(customer_ID, customer_Name, Address, postal_Code, phone, division, country);
+            int country_ID = result.getInt("Country_ID");
+            int division_ID = result.getInt("Division_ID");
+            customerResult = new customer(customer_ID, customer_Name, Address, postal_Code, phone, division, country, country_ID, division_ID);
             //System.out.println(customerResult.getCustomer_Name());
             list.addAll(customerResult);
         }

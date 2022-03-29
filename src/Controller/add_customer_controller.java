@@ -94,7 +94,7 @@ public class add_customer_controller implements Initializable {
         stage.setTitle("Customer Landing Page");
         stage.setScene(scene);
         stage.show();
-        //TODO add restrictions to not overload combo box selection when you pick a country a second time
+
     }
 
     public void goBack(ActionEvent actionEvent)throws IOException{
