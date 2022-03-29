@@ -133,8 +133,16 @@ public class customerInfoController implements Initializable {
            }
     }
 
+    public void selectDivisionByCountry(ActionEvent actionEvent) throws IOException {
+       int updatedCountry = updateCountry.getSelectionModel().getSelectedItem().getCountryID();
+        updateDivision.getItems().clear();
+        try {
+            updateDivision.setItems(divisionDao.getAllDivision(divisionOptions, updatedCountry));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
         //TODO:
-        //Create onAction for when yuo change country; it needs to update divisions list
         //create exception to not allow for null selection of division
         //update sql command to include updating the country and division when submitting update
 
