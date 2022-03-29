@@ -37,9 +37,9 @@ public class CustomerDao {
 
     }
 
-    public static void updateCustomerSQL(int ID, String name, String address, String postalCode, String phone, String user) {
+    public static void updateCustomerSQL(int ID, String name, String address, String postalCode, String phone, String user, int divisionID) {
         JDBC.getConnection();
-        String sqlStmt = "UPDATE customers SET Customer_Name = '" + name + "', Address = '" + address + "', Postal_Code = '" + postalCode + "', Phone = '" + phone + "', Last_Update = sysdate(), Last_Updated_By = '" + user + "' WHERE Customer_ID = '" + ID + "';";
+        String sqlStmt = "UPDATE customers SET Customer_Name = '" + name + "', Address = '" + address + "', Postal_Code = '" + postalCode + "', Phone = '" + phone + "', Last_Update = sysdate(), Last_Updated_By = '" + user + "', Division_ID = '" + divisionID + "' WHERE Customer_ID = '" + ID + "';";
         Query.makeQuery(sqlStmt);
     }
 

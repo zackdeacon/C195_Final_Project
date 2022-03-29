@@ -142,15 +142,15 @@ public class customerInfoController implements Initializable {
             e.printStackTrace();
         }
     }
-        //TODO:
-        //create exception to not allow for null selection of division
-        //update sql command to include updating the country and division when submitting update
+
 
     public void completeUpdatedCustomer() {
         if(selectedCustomer == null){
             alertToDisplay(5);
+        } else if(updateDivision.getSelectionModel().getSelectedItem() == null){
+            alertToDisplay(6);
         } else {
-            CustomerDao.updateCustomerSQL(selectedID, textName.getText(), textAddress.getText(), textPostalCode.getText(), textPhone.getText(), activeUser.getUserName());
+            CustomerDao.updateCustomerSQL(selectedID, textName.getText(), textAddress.getText(), textPostalCode.getText(), textPhone.getText(), activeUser.getUserName(), updateDivision.getSelectionModel().getSelectedItem().getDivisionID());
             try {
                 customerTable.getItems().clear();
                 customerName.setCellValueFactory(new PropertyValueFactory<>("customer_Name"));

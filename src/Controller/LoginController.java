@@ -153,6 +153,12 @@ public class LoginController implements Initializable{
                 errorAlert.setContentText("Please select a customer from the list at the left to continue");
                 errorAlert.showAndWait();
                 break;
+            case 6:
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("No Division");
+                errorAlert.setContentText("Please select a division for this customer in order to continue");
+                errorAlert.showAndWait();
+                break;
         }
         } catch(Exception e){
             System.out.println("wasteful");
