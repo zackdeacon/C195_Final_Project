@@ -31,7 +31,7 @@
       <TextField fx:id="textAddress" layoutX="727.0" layoutY="250.0" prefHeight="25.0" prefWidth="323.0" />
       <TextField fx:id="textPostalCode" layoutX="727.0" layoutY="290.0" prefHeight="25.0" prefWidth="323.0" />
       <TextField fx:id="textPhone" layoutX="727.0" layoutY="330.0" prefHeight="25.0" prefWidth="323.0" />
-      <Button layoutX="701.0" layoutY="505.0" mnemonicParsing="false" text="Appointments" />
+      <Button layoutX="701.0" layoutY="505.0" mnemonicParsing="false" text="Appointments" onAction="#goToAppointments"/>
       <Button layoutX="915.0" layoutY="598.0" mnemonicParsing="false" text="Reports" />
       <TextField fx:id="textID" layoutX="727.0" layoutY="170.0" prefHeight="25.0" prefWidth="323.0" disable="true"/>
       <ComboBox fx:id="updateCountry" layoutX="727.0" layoutY="376.0" prefWidth="150.0" onAction="#selectDivisionByCountry"/>

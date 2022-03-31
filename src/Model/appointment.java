@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class appointment {
 
-    private int appointmnetID;
+    private int appointmentID;
     private String title;
     private String description;
     private String location;
@@ -16,7 +16,7 @@ public class appointment {
     private int userID;
 
     public appointment(int appointmentID, String title, String description, String location, String type, Date start, Date end, int contactID, int customerID, int userID){
-        this.appointmnetID = appointmentID;
+        this.appointmentID = appointmentID;
         this.title=title;
         this.description=description;
         this.location=location;
@@ -28,12 +28,12 @@ public class appointment {
         this.userID=userID;
     }
 
-    public int getAppointmnetID() {
-        return appointmnetID;
+    public int getAppointmentID() {
+        return appointmentID;
     }
 
-    public void setAppointmnetID(int appointmnetID) {
-        this.appointmnetID = appointmnetID;
+    public void setAppointmentID(int appointmentID) {
+        this.appointmentID = appointmentID;
     }
 
     public String getTitle() {

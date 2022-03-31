@@ -176,6 +176,15 @@ public class customerInfoController implements Initializable {
         stage.show();
     }
 
+    public void goToAppointments(ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1225, 700);
+        stage.setTitle("Appointments Page");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void exitProgram() {
         System.exit(0);
     }

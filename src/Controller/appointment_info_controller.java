@@ -1,20 +1,24 @@
 package Controller;
 
-import Model.contact;
-import Model.country;
-import Model.customer;
-import Model.user;
+import Database.CustomerDao;
+import Database.appointmentDao;
+import Model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class appointment_info_controller implements Initializable {
+
+    @FXML
+    public TableView appointmentTable;
 
     @FXML
     public TableColumn appIDCol;
@@ -73,9 +77,30 @@ public class appointment_info_controller implements Initializable {
     @FXML
     public ComboBox<user> userBox;
 
+    ObservableList<appointment> apptList = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("date: " + java.time.LocalDateTime.now());
+        LocalDateTime today = LocalDateTime.now();
+        System.out.println("date 7 days later: " + java.time.LocalDateTime.now().plusDays(7));
+        LocalDateTime lastDay = LocalDateTime.now().plusDays(7);
 
+        appIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        custCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        userCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        try {
+            appointmentTable.setItems(appointmentDao.getAllAppt(apptList, today, lastDay));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
