@@ -1,6 +1,7 @@
 package Database;
 
 import Model.appointment;
+import Model.contact;
 import Model.customer;
 import javafx.collections.ObservableList;
 
@@ -34,4 +35,17 @@ public class appointmentDao {
         }
         return list;
     }
+
+    public static ObservableList getAllContacts(ObservableList list) throws SQLException, Exception {
+        JDBC.getConnection();
+        String sqlStmt = "SELECT * FROM contacts;";
+        Query.makeQuery(sqlStmt);
+        contact contactResult;
+        ResultSet result = Query.getResult();
+        while(result.next()){
+
+        }
+        return list;
+    }
+
 }

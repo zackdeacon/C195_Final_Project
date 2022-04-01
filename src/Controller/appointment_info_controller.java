@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import static Controller.LoginController.activeUser;
+
 public class appointment_info_controller implements Initializable {
 
     @FXML
@@ -77,15 +79,34 @@ public class appointment_info_controller implements Initializable {
     @FXML
     public ComboBox<user> userBox;
 
+
+    @FXML
+    public RadioButton monthlyRadio;
+
+    @FXML
+    public RadioButton weeklyRadio;
+
     ObservableList<appointment> apptList = FXCollections.observableArrayList();
+    ObservableList<contact> contList = FXCollections.observableArrayList();
+    ObservableList<customer> custList = FXCollections.observableArrayList();
+    ObservableList<user> userList = FXCollections.observableArrayList();
+    LocalDateTime today = LocalDateTime.now();
+    LocalDateTime lastDayWeek = LocalDateTime.now().plusDays(7);
+    LocalDateTime lastDayMonth = LocalDateTime.now().plusDays(30);
+    appointment selectedAppointment;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("date: " + java.time.LocalDateTime.now());
-        LocalDateTime today = LocalDateTime.now();
-        System.out.println("date 7 days later: " + java.time.LocalDateTime.now().plusDays(7));
-        LocalDateTime lastDay = LocalDateTime.now().plusDays(7);
+        userSelectedLabel.setText(activeUser.getUserName());
+        weeklyRadio.setSelected(true);
+        weeklyView();
+    }
 
+
+    public void monthlyView() {
+        weeklyRadio.setSelected(false);
+        monthlyRadio.setSelected(true);
+        appointmentTable.getItems().clear();
         appIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -97,19 +118,49 @@ public class appointment_info_controller implements Initializable {
         custCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
         try {
-            appointmentTable.setItems(appointmentDao.getAllAppt(apptList, today, lastDay));
+            appointmentTable.setItems(appointmentDao.getAllAppt(apptList, today, lastDayMonth));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-    public void monthlyView() {
-        //loads appointment table with data in month range
+    public void weeklyView() {
+        monthlyRadio.setSelected(false);
+        weeklyRadio.setSelected(true);
+        appointmentTable.getItems().clear();
+        appIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        custCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        userCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        try {
+            appointmentTable.setItems(appointmentDao.getAllAppt(apptList, today, lastDayWeek));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void weeklyView() {
-        //loads appointment table with data in week range
+    public void setUpdateAppointment() {
+        selectedAppointment = (appointment) appointmentTable.getSelectionModel().getSelectedItem();
+        int custID = selectedAppointment.getCustomerID();
+        int contID = selectedAppointment.getContactID();
+        int userID = selectedAppointment.getUserID();
+        apptIDText.setText(String.valueOf(selectedAppointment.getAppointmentID()));
+        titleText.setText(selectedAppointment.getTitle());
+        descText.setText(selectedAppointment.getDescription());
+        locText.setText(selectedAppointment.getLocation());
+        typeText.setText(selectedAppointment.getType());
+        try{
+            contactBox.getItems().clear();
+            contactBox.setItems(appointmentDao.getAllContacts(contList));
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteAppt() {
