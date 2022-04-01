@@ -3,6 +3,7 @@ package Database;
 import Model.appointment;
 import Model.contact;
 import Model.customer;
+import Model.user;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
@@ -43,9 +44,46 @@ public class appointmentDao {
         contact contactResult;
         ResultSet result = Query.getResult();
         while(result.next()){
-
+            int contactID = result.getInt("Contact_ID");
+            String name = result.getString("Contact_Name");
+            String email = result.getString("Email");
+            contactResult = new contact(contactID, name, email);
+            list.addAll(contactResult);
         }
         return list;
     }
+
+    public static ObservableList getAllUser(ObservableList list) throws SQLException, Exception {
+        JDBC.getConnection();
+        String sqlStmt = "SELECT * FROM users;";
+        Query.makeQuery(sqlStmt);
+        user userResult;
+        ResultSet result = Query.getResult();
+        while(result.next()){
+            int userID = result.getInt("User_ID");
+            String name = result.getString("User_Name");
+            String password = result.getString("Password");
+            userResult = new user(userID, name, password);
+            list.addAll(userResult);
+        }
+        return list;
+    }
+
+//    public static ObservableList getAllCustomer(ObservableList list) throws SQLException, Exception {
+//        JDBC.getConnection();
+//        String sqlStmt = "SELECT * FROM customers;";
+//        Query.makeQuery(sqlStmt);
+//        customer customerResult;
+//        ResultSet result = Query.getResult();
+//        while(result.next()){
+//            int customerID = result.getInt("Customer_ID");
+//            String name = result.getString("Customer_Name");
+//            String address = result.getString("Address");
+//            String address = result.getString("Address");
+//            customerResult = new customer();
+//            list.addAll(customerResult);
+//        }
+//        return list;
+//    }
 
 }

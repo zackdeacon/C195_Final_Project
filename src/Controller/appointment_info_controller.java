@@ -158,6 +158,29 @@ public class appointment_info_controller implements Initializable {
         try{
             contactBox.getItems().clear();
             contactBox.setItems(appointmentDao.getAllContacts(contList));
+            userBox.getItems().clear();
+            userBox.setItems(appointmentDao.getAllUser(userList));
+            customerBox.getItems().clear();
+            customerBox.setItems(CustomerDao.getAllCustomer(custList));
+            for(contact c : contactBox.getItems()){
+                if(selectedAppointment.getContactID() == c.getContactID()){
+                    contactBox.setValue(c);
+                    break;
+                }
+            }
+            for(user u : userBox.getItems()){
+                if(selectedAppointment.getUserID() == u.getUserID()){
+                    userBox.setValue(u);
+                    break;
+                }
+            }
+            for(customer cu : customerBox.getItems()){
+                if(selectedAppointment.getCustomerID() == cu.getCustomer_ID()){
+                    customerBox.setValue(cu);
+                    break;
+                }
+            }
+
         }catch(Exception e) {
             e.printStackTrace();
         }
