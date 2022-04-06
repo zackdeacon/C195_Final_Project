@@ -93,21 +93,17 @@ public class appointmentDao {
         return list;
     }
 
-//    public static ObservableList getAllCustomer(ObservableList list) throws SQLException, Exception {
-//        JDBC.getConnection();
-//        String sqlStmt = "SELECT * FROM customers;";
-//        Query.makeQuery(sqlStmt);
-//        customer customerResult;
-//        ResultSet result = Query.getResult();
-//        while(result.next()){
-//            int customerID = result.getInt("Customer_ID");
-//            String name = result.getString("Customer_Name");
-//            String address = result.getString("Address");
-//            String address = result.getString("Address");
-//            customerResult = new customer();
-//            list.addAll(customerResult);
-//        }
-//        return list;
-//    }
+    public static boolean insertAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, String user, int custID, int userID, int contactID) throws SQLException, Exception {
+        JDBC.getConnection();
+        try {
+            String sqlStmt = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, " +
+                    "Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES('" + title + "', '" + description + "', " +
+                    "'" + location + "', '" + type + "', '" + start + "','" + end + "', sysdate(), '" + user + "', sysdate(), '" + user + "', '" + custID + "','" + userID + "','" + contactID + "' );";
+            Query.makeQuery(sqlStmt);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

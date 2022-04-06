@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
@@ -103,11 +104,27 @@ public class create_appointment_controller implements Initializable {
     }
 
 
-    public void createAppt(){
+    public void createAppt(ActionEvent actionEvent) throws Exception {
         //TODO
-        //Build SQL strings to INSERT new appointments into database
-        //Collect correct data types from forms to inject into SQL strings
         //Make sure pre loaded fields are refreshing correctly
+        String title = textTitle.getText();
+        String description = textDesc.getText();
+        String location = textLoc.getText();
+        String type = textType.getText();
+        LocalDateTime start = LocalDateTime.of(startDate.getValue(), startTime.getValue());
+        LocalDateTime end = LocalDateTime.of(endDate.getValue(), endTime.getValue());
+        String user = activeUser.getUserName();
+        int customerID = custBox.getSelectionModel().getSelectedItem().getCustomer_ID();
+        int userID = userBox.getSelectionModel().getSelectedItem().getUserID();
+        int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
+        appointmentDao.insertAppointment(title, description, location, type, start, end, user, customerID, userID, contactID);
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1300, 950);
+        stage.setTitle("Appointment Info Page");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void goBackButton(ActionEvent actionEvent) throws IOException {
