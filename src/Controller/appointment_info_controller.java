@@ -5,11 +5,18 @@ import Database.appointmentDao;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -220,22 +227,36 @@ public class appointment_info_controller implements Initializable {
     }
 
     public void deleteAppt() {
-        //deletes an appointment
+        //TODO
+        //create SQL string to correctly delete appt from database
+        //same with customers
     }
 
-    public void createAppt(){
-        //takes you to create appointment screen
+    public void createAppt(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/create_appointment_form.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1150, 750);
+        stage.setTitle("Create Appointment Page");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void updateAppt() {
-        //allows you to save the changes to updated appointment
+        //TODO
+        //Create SQL string to correctly update the database
+        //collect correct data typed info from the forms
     }
 
     public void closeApplication() {
         System.exit(0);
     }
 
-    public void goBack(){
-        //brings you back to main customer screen
+    public void goBack(ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1150, 750);
+        stage.setTitle("Customer Landing Page");
+        stage.setScene(scene);
+        stage.show();
     }
 }
