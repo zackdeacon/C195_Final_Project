@@ -27,8 +27,8 @@ public class appointmentDao {
             String location = result.getString("Location");
             int contactID = result.getInt("Contact_ID");
             String type = result.getString("Type");
-            Date start = result.getDate("Start");
-            Date end = result.getDate("End");
+            LocalDateTime start = result.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = result.getTimestamp("End").toLocalDateTime();
             int customerID = result.getInt("Customer_ID");
             int userID = result.getInt("User_ID");
             appointmentResult = new appointment(appointmentID, title, description, location, type, start, end, contactID, customerID, userID);

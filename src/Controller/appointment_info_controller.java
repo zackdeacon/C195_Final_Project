@@ -11,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -79,12 +81,24 @@ public class appointment_info_controller implements Initializable {
     @FXML
     public ComboBox<user> userBox;
 
+    @FXML
+    public ComboBox<LocalTime> startCombo;
+
+    @FXML
+    public ComboBox<LocalTime> endCombo;
 
     @FXML
     public RadioButton monthlyRadio;
 
     @FXML
     public RadioButton weeklyRadio;
+
+    @FXML
+    public DatePicker startDate;
+
+    @FXML
+    public DatePicker endDate;
+
 
     ObservableList<appointment> apptList = FXCollections.observableArrayList();
     ObservableList<contact> contList = FXCollections.observableArrayList();
@@ -94,6 +108,9 @@ public class appointment_info_controller implements Initializable {
     LocalDateTime lastDayWeek = LocalDateTime.now().plusDays(7);
     LocalDateTime lastDayMonth = LocalDateTime.now().plusDays(30);
     appointment selectedAppointment;
+    int custID;
+    int contID;
+    int userID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -147,15 +164,31 @@ public class appointment_info_controller implements Initializable {
 
     public void setUpdateAppointment() {
         selectedAppointment = (appointment) appointmentTable.getSelectionModel().getSelectedItem();
-        int custID = selectedAppointment.getCustomerID();
-        int contID = selectedAppointment.getContactID();
-        int userID = selectedAppointment.getUserID();
+        custID = selectedAppointment.getCustomerID();
+        contID = selectedAppointment.getContactID();
+        userID = selectedAppointment.getUserID();
         apptIDText.setText(String.valueOf(selectedAppointment.getAppointmentID()));
         titleText.setText(selectedAppointment.getTitle());
         descText.setText(selectedAppointment.getDescription());
         locText.setText(selectedAppointment.getLocation());
         typeText.setText(selectedAppointment.getType());
+
+
+        LocalTime begin = LocalTime.of(0,0);
+        LocalTime endOfDay = LocalTime.of(23,0);
+
+
+        while(begin.isBefore(endOfDay)){
+            begin = begin.plusHours(1);
+            startCombo.getItems().add(begin);
+            endCombo.getItems().add(begin);
+        }
+
         try{
+            startDate.setValue(selectedAppointment.getStartDate());
+            endDate.setValue(selectedAppointment.getEndDate());
+            startCombo.setValue(selectedAppointment.getStartTime());
+            endCombo.setValue(selectedAppointment.getEndTime());
             contactBox.getItems().clear();
             contactBox.setItems(appointmentDao.getAllContacts(contList));
             userBox.getItems().clear();
