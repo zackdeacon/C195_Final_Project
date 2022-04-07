@@ -241,10 +241,7 @@ public class appointment_info_controller implements Initializable {
         stage.show();
     }
 
-    public void updateAppt() {
-        //TODO
-        //Create SQL string to correctly update the database
-        //collect correct data typed info from the forms
+    public void updateAppt(ActionEvent actionEvent) throws IOException {
         int appID = Integer.parseInt(apptIDText.getText());
         String title = titleText.getText();
         String description = descText.getText();
@@ -261,6 +258,12 @@ public class appointment_info_controller implements Initializable {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1300, 950);
+        stage.setTitle("Appointment Info Page");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void closeApplication() {
