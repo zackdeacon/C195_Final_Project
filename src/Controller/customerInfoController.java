@@ -169,8 +169,18 @@ public class customerInfoController implements Initializable {
 
     public void deleteCustomer(ActionEvent actionEvent) throws IOException {
         int custID = selectedCustomer.getCustomer_ID();
-        CustomerDao.deleteCustomer(custID);
-        System.out.println("deleted!");
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert informAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle("Delete Customer");
+        confirmAlert.setHeaderText("You are about to delete " + selectedCustomer.getCustomer_Name() + ". Are you sure?");
+        confirmAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                informAlert.setTitle("Deleted");
+                informAlert.setHeaderText(selectedCustomer.getCustomer_Name() + " has been deleted");
+                informAlert.show();
+                CustomerDao.deleteCustomer(custID);
+            }
+        });
         Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 1150, 750);

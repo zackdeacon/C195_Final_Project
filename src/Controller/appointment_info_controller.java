@@ -228,7 +228,18 @@ public class appointment_info_controller implements Initializable {
 
     public void deleteAppt(ActionEvent actionEvent) throws IOException {
         int appID = selectedAppointment.getAppointmentID();
-        appointmentDao.deleteAppointment(appID);
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert informAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle("Delete Appointment");
+        confirmAlert.setHeaderText("You are about to delete " + selectedAppointment.getTitle() + ". Are you sure?");
+        confirmAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                informAlert.setTitle("Deleted");
+                informAlert.setHeaderText(selectedAppointment.getTitle() + " has been deleted");
+                informAlert.show();
+                appointmentDao.deleteAppointment(appID);
+            }
+        });
         Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 1300, 950);
