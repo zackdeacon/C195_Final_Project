@@ -106,4 +106,16 @@ public class appointmentDao {
         }
     }
 
+    public static void updateAppointmentSQL(int appID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, String userName, int custID, int userID, int contactID) {
+        JDBC.getConnection();
+        String sqlStmt = "UPDATE appointments SET Title = '" + title + "', Description = '" + description + "', Location = '" + location + "', " +
+                "Type = '" + type + "', Start = '" + Timestamp.valueOf(start) + "', End = '" + Timestamp.valueOf(end) + "', " +
+                "Last_Update = sysdate(), Last_Updated_By = '" + userName + "', Customer_ID = '" + custID + "', User_ID = '" + userID + "', Contact_ID = '" + contactID + "' WHERE Appointment_ID = '" + appID + "';";
+        Query.makeQuery(sqlStmt);
+    }
+
+    //UPDATE appointments SET Title = 'Update Title', Description = 'Updated description', Location = 'Updated Location',
+    // Type = 'Updated Type', Start = timestamp('2022-04-07', '18:37:42'), End = timestamp('2022-04-08','15:30:00'),
+    // Last_Update = sysdate(), Last_Updated_By = 'Zack', Customer_ID = 1, User_ID = 1, Contact_ID = 1 WHERE Appointment_ID = 4;
+
 }

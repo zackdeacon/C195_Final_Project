@@ -245,6 +245,22 @@ public class appointment_info_controller implements Initializable {
         //TODO
         //Create SQL string to correctly update the database
         //collect correct data typed info from the forms
+        int appID = Integer.parseInt(apptIDText.getText());
+        String title = titleText.getText();
+        String description = descText.getText();
+        String location = locText.getText();
+        String type = typeText.getText();
+        LocalDateTime start = LocalDateTime.of(startDate.getValue(), startCombo.getValue());
+        LocalDateTime end = LocalDateTime.of(endDate.getValue(), endCombo.getValue());
+        String userName = activeUser.getUserName();
+        int custID = customerBox.getSelectionModel().getSelectedItem().getCustomer_ID();
+        int userID = userBox.getSelectionModel().getSelectedItem().getUserID();
+        int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
+        try{
+            appointmentDao.updateAppointmentSQL(appID, title, description, location, type, start, end, userName, custID, userID, contactID);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void closeApplication() {
