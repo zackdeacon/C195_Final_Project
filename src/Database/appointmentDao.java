@@ -114,6 +114,10 @@ public class appointmentDao {
         Query.makeQuery(sqlStmt);
     }
 
-
+    public static void deleteAppointment(int apptID) {
+        JDBC.getConnection();
+        String sqlstmt = "DELETE FROM appointments WHERE Appointment_ID = '" + apptID + "';";
+        Query.makeQuery(sqlstmt);
+    }
 
 }

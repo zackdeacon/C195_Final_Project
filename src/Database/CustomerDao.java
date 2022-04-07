@@ -49,5 +49,11 @@ public class CustomerDao {
         Query.makeQuery(sqlStmt);
     }
 
+    public static void deleteCustomer(int custID) {
+        JDBC.getConnection();
+        String sqlstmt = "DELETE FROM customers WHERE Customer_ID = '" + custID + "';";
+        Query.makeQuery(sqlstmt);
+    }
+
 
 }

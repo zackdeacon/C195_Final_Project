@@ -26,7 +26,7 @@
       <Button layoutX="987.0" layoutY="505.0" mnemonicParsing="false" onAction="#goToAddCustomer" text="Add New User" />
       <Button layoutX="1028.0" layoutY="598.0" mnemonicParsing="false" onAction="#exitProgram" text="Close" />
       <Button layoutX="944.0" layoutY="441.0" mnemonicParsing="false" onAction="#completeUpdatedCustomer" text="Update Customer" />
-      <Button layoutX="836.0" layoutY="505.0" mnemonicParsing="false" text="Delete Customer" />
+      <Button layoutX="836.0" layoutY="505.0" mnemonicParsing="false" text="Delete Customer" onAction="#deleteCustomer"/>
       <TextField fx:id="textName" layoutX="727.0" layoutY="210.0" prefHeight="25.0" prefWidth="323.0" />
       <TextField fx:id="textAddress" layoutX="727.0" layoutY="250.0" prefHeight="25.0" prefWidth="323.0" />
       <TextField fx:id="textPostalCode" layoutX="727.0" layoutY="290.0" prefHeight="25.0" prefWidth="323.0" />

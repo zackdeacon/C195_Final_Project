@@ -226,10 +226,15 @@ public class appointment_info_controller implements Initializable {
         }
     }
 
-    public void deleteAppt() {
-        //TODO
-        //create SQL string to correctly delete appt from database
-        //same with customers
+    public void deleteAppt(ActionEvent actionEvent) throws IOException {
+        int appID = selectedAppointment.getAppointmentID();
+        appointmentDao.deleteAppointment(appID);
+        Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1300, 950);
+        stage.setTitle("Appointment Info Page");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void createAppt(ActionEvent actionEvent) throws IOException {

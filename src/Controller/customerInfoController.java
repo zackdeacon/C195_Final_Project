@@ -167,6 +167,18 @@ public class customerInfoController implements Initializable {
         }
     }
 
+    public void deleteCustomer(ActionEvent actionEvent) throws IOException {
+        int custID = selectedCustomer.getCustomer_ID();
+        CustomerDao.deleteCustomer(custID);
+        System.out.println("deleted!");
+        Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1150, 750);
+        stage.setTitle("Customer Landing Page");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void goToAddCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/add_customer_form.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
