@@ -2,6 +2,7 @@ package Controller;
 
 import Database.UserDao;
 import Model.user;
+import Utility.filewriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
@@ -48,6 +51,8 @@ public class LoginController implements Initializable{
     public TextField passwordText;
 
     static user activeUser;
+    LocalDate date = LocalDate.now();
+    LocalTime time = LocalTime.now();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,7 +88,7 @@ public class LoginController implements Initializable{
                alertToDisplay(2);
            }
             if(activeUser.getPassword().equals(enteredPassword)){
-                System.out.println("You're in!");
+                filewriter.loginToFile(enteredName, date, time, "succeeded");
                 Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
                 Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root, 1150, 750);
@@ -91,6 +96,7 @@ public class LoginController implements Initializable{
                 stage.setScene(scene);
                 stage.show();
             } else {
+                filewriter.loginToFile(enteredName, date, time, "failed");
                 if(Locale.getDefault().getDisplayCountry().equals("France")) {
                     alertToDisplay(3);
                 } else if(Locale.getDefault().getDisplayCountry().equals("United States")){
