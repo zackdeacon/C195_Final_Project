@@ -47,7 +47,7 @@ public class create_appointment_controller implements Initializable {
     public TextField textLoc;
 
     @FXML
-    public TextField textType;
+    public ComboBox textType;
 
     @FXML
     public DatePicker startDate;
@@ -74,11 +74,14 @@ public class create_appointment_controller implements Initializable {
     ObservableList<customer> custList = FXCollections.observableArrayList();
     ObservableList<user> userList = FXCollections.observableArrayList();
     ObservableList<appointment> apptList = FXCollections.observableArrayList();
+    ObservableList<String> typeList = FXCollections.observableArrayList();
     public static int newAppID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         activeUserLabel.setText(activeUser.getUserName());
+        typeList.add("Work");
+        typeList.add("Pleasure");
         LocalTime begin = LocalTime.of(0,0);
         LocalTime endOfDay = LocalTime.of(23,0);
         while(begin.isBefore(endOfDay)){
@@ -86,6 +89,7 @@ public class create_appointment_controller implements Initializable {
             startTime.getItems().add(begin);
             endTime.getItems().add(begin);
         }
+        textType.setItems(typeList);
         try {
         contactBox.getItems().clear();
         contactBox.setItems(appointmentDao.getAllContacts(contList));
@@ -110,7 +114,7 @@ public class create_appointment_controller implements Initializable {
         String title = textTitle.getText();
         String description = textDesc.getText();
         String location = textLoc.getText();
-        String type = textType.getText();
+        String type = textType.getSelectionModel().getSelectedItem().toString();
         LocalDateTime start = LocalDateTime.of(startDate.getValue(), startTime.getValue());
         LocalDateTime end = LocalDateTime.of(endDate.getValue(), endTime.getValue());
         String user = activeUser.getUserName();

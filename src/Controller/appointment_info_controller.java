@@ -77,7 +77,7 @@ public class appointment_info_controller implements Initializable {
     public TextField apptIDText;
 
     @FXML
-    public TextField typeText;
+    public ComboBox<String> typeText;
 
     @FXML
     public ComboBox<contact> contactBox;
@@ -111,6 +111,7 @@ public class appointment_info_controller implements Initializable {
     ObservableList<contact> contList = FXCollections.observableArrayList();
     ObservableList<customer> custList = FXCollections.observableArrayList();
     ObservableList<user> userList = FXCollections.observableArrayList();
+    ObservableList<String> typeList = FXCollections.observableArrayList();
     LocalDateTime today = LocalDateTime.now();
     LocalDateTime lastDayWeek = LocalDateTime.now().plusDays(7);
     LocalDateTime lastDayMonth = LocalDateTime.now().plusDays(30);
@@ -124,6 +125,8 @@ public class appointment_info_controller implements Initializable {
         userSelectedLabel.setText(activeUser.getUserName());
         weeklyRadio.setSelected(true);
         weeklyView();
+        typeList.add("Work");
+        typeList.add("Pleasure");
     }
 
 
@@ -178,7 +181,11 @@ public class appointment_info_controller implements Initializable {
         titleText.setText(selectedAppointment.getTitle());
         descText.setText(selectedAppointment.getDescription());
         locText.setText(selectedAppointment.getLocation());
-        typeText.setText(selectedAppointment.getType());
+        if(selectedAppointment.getType().equals("Work")){
+            typeText.setValue("Work");
+        } else if(selectedAppointment.getType().equals("Pleasure")){
+            typeText.setValue("Pleasure");
+        }
 
 
         LocalTime begin = LocalTime.of(0,0);
@@ -202,6 +209,9 @@ public class appointment_info_controller implements Initializable {
             userBox.setItems(appointmentDao.getAllUser(userList));
             customerBox.getItems().clear();
             customerBox.setItems(CustomerDao.getAllCustomer(custList));
+            typeText.setItems(typeList);
+
+
             for(contact c : contactBox.getItems()){
                 if(selectedAppointment.getContactID() == c.getContactID()){
                     contactBox.setValue(c);
@@ -262,7 +272,7 @@ public class appointment_info_controller implements Initializable {
         String title = titleText.getText();
         String description = descText.getText();
         String location = locText.getText();
-        String type = typeText.getText();
+        String type = typeText.getSelectionModel().getSelectedItem();
         LocalDateTime start = LocalDateTime.of(startDate.getValue(), startCombo.getValue());
         LocalDateTime end = LocalDateTime.of(endDate.getValue(), endCombo.getValue());
         String userName = activeUser.getUserName();

@@ -14,7 +14,7 @@
       <TextField fx:id="textTitle" layoutX="162.0" layoutY="200.0" />
       <TextField fx:id="textDesc" layoutX="162.0" layoutY="275.0" />
       <TextField fx:id="textLoc" layoutX="162.0" layoutY="350.0" />
-      <TextField fx:id="textType" layoutX="162.0" layoutY="425.0" />
+      <ComboBox fx:id="textType" layoutX="162.0" layoutY="425.0" />
       <ComboBox fx:id="contactBox" layoutX="557.0" layoutY="125.0" prefWidth="150.0" />
       <ComboBox fx:id="custBox" layoutX="557.0" layoutY="200.0" prefWidth="150.0" />
       <ComboBox fx:id="userBox" layoutX="557.0" layoutY="275.0" prefWidth="150.0" />

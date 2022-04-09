@@ -189,6 +189,15 @@ public class customerInfoController implements Initializable {
         stage.show();
     }
 
+    public void toReports(ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/view/reports.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1200, 1000);
+        stage.setTitle("Reports Page");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void goToAddCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/add_customer_form.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
