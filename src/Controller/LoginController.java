@@ -14,13 +14,15 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.time.ZoneOffset.UTC;
 
 public class LoginController implements Initializable{
     @FXML
@@ -56,8 +58,13 @@ public class LoginController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Initialized");
         setLanguage();
+        ZonedDateTime utcZDT = ZonedDateTime.of(LocalDate.now(), LocalTime.now(), ZoneId.of("GMT"));
+        ZoneId localZoneID = ZoneId.of(TimeZone.getDefault().getID());
+        ZonedDateTime gmtToLocalZDT = utcZDT.withZoneSameInstant(localZoneID);
+
+        System.out.println("Local zone " + localZoneID);
+        System.out.println("gmt to local " + gmtToLocalZDT);
     }
 
     public void setLanguage() {
