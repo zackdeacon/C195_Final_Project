@@ -3,6 +3,7 @@ package Controller;
 import Database.UserDao;
 import Model.user;
 import Utility.filewriter;
+import Utility.timezones;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,12 +16,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 import static java.time.ZoneOffset.UTC;
 
@@ -59,12 +62,10 @@ public class LoginController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguage();
-        ZonedDateTime utcZDT = ZonedDateTime.of(LocalDate.now(), LocalTime.now(), ZoneId.of("GMT"));
-        ZoneId localZoneID = ZoneId.of(TimeZone.getDefault().getID());
-        ZonedDateTime gmtToLocalZDT = utcZDT.withZoneSameInstant(localZoneID);
-
-        System.out.println("Local zone " + localZoneID);
-        System.out.println("gmt to local " + gmtToLocalZDT);
+//        Should return 9pm day before in New York time
+        LocalDate date = LocalDate.of(2022,03,25);
+        LocalTime time = LocalTime.of(01,00);
+        System.out.println(timezones.utcToLocal(date, time));
     }
 
     public void setLanguage() {
