@@ -98,7 +98,7 @@ public class appointmentDao {
         try {
             String sqlStmt = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, " +
                     "Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES('" + title + "', '" + description + "', " +
-                    "'" + location + "', '" + type + "', '" + start + "','" + end + "', sysdate(), '" + user + "', sysdate(), '" + user + "', '" + custID + "','" + userID + "','" + contactID + "' );";
+                    "'" + location + "', '" + type + "', '" + Timestamp.valueOf(start) + "','" + Timestamp.valueOf(end) + "', now(), '" + user + "', now(), '" + user + "', '" + custID + "','" + userID + "','" + contactID + "' );";
             Query.makeQuery(sqlStmt);
             return true;
         } catch (Exception e) {
@@ -110,7 +110,7 @@ public class appointmentDao {
         JDBC.getConnection();
         String sqlStmt = "UPDATE appointments SET Title = '" + title + "', Description = '" + description + "', Location = '" + location + "', " +
                 "Type = '" + type + "', Start = '" + Timestamp.valueOf(start) + "', End = '" + Timestamp.valueOf(end) + "', " +
-                "Last_Update = sysdate(), Last_Updated_By = '" + userName + "', Customer_ID = '" + custID + "', User_ID = '" + userID + "', Contact_ID = '" + contactID + "' WHERE Appointment_ID = '" + appID + "';";
+                "Last_Update = now(), Last_Updated_By = '" + userName + "', Customer_ID = '" + custID + "', User_ID = '" + userID + "', Contact_ID = '" + contactID + "' WHERE Appointment_ID = '" + appID + "';";
         Query.makeQuery(sqlStmt);
     }
 

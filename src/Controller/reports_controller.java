@@ -17,9 +17,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -56,7 +55,29 @@ public class reports_controller implements Initializable {
     public Label monthNum;
 
     @FXML
-    public TextArea contactSched;
+    public TableView tableSched;
+
+    @FXML
+    public TableColumn apptID;
+
+    @FXML
+    public TableColumn Title;
+
+    @FXML
+    public TableColumn Type;
+
+    @FXML
+    public TableColumn Desc;
+
+    @FXML
+    public TableColumn start;
+
+
+    @FXML
+    public TableColumn end;
+
+    @FXML
+    public TableColumn custID;
 
     @FXML
     public Label customerLabel;
@@ -130,9 +151,17 @@ public class reports_controller implements Initializable {
     }
 
     public void schedByContact() throws Exception {
+        apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        Title.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        Type.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        Desc.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        start.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        end.setCellValueFactory(new PropertyValueFactory<>("End"));
+        custID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
         String ContactName = contactBox.getSelectionModel().getSelectedItem().getName();
-        reportsDao.getApptByContact(contactID, apptByContactList);
+        apptByContactList.clear();
+        tableSched.setItems(reportsDao.getApptByContact(contactID, apptByContactList));
 
         contactSchedLabel.setText("See " + ContactName + "'s schedule below:");
     }

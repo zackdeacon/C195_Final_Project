@@ -63,9 +63,9 @@ public class LoginController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguage();
 //        Should return 9pm day before in New York time
-        LocalDate date = LocalDate.of(2022,03,25);
-        LocalTime time = LocalTime.of(01,00);
-        System.out.println(timezones.utcToLocal(date, time));
+//        LocalDate date = LocalDate.of(2022,03,25);
+//        LocalTime time = LocalTime.of(01,00);
+//        System.out.println(timezones.utcToLocal(date, time));
     }
 
     public void setLanguage() {
