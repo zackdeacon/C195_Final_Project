@@ -105,9 +105,11 @@ public class customerInfoController implements Initializable {
             newID = customerList.get(customerList.size()-1).getCustomer_ID() + 1;
             appointmentDao.getAll(appointmentList);
             int count = 0;
-            LocalTime below = LocalTime.now().minusMinutes(15);
+            LocalTime range = LocalTime.now().plusMinutes(15);
+           // System.out.println("below time: " + below);
             while(count < appointmentList.size()){
-                if(appointmentList.get(count).getStart().toLocalTime().isAfter(below) && appointmentList.get(count).getStart().toLocalTime().isBefore(LocalTime.now())){
+               // System.out.println("appt: " + appointmentList.get(count).getStart().toLocalTime());
+                if(appointmentList.get(count).getStart().toLocalTime().isAfter(LocalTime.now()) && appointmentList.get(count).getStart().toLocalTime().isBefore(range)){
                     alertToDisplay(7);
                 }
                 count += 1;
