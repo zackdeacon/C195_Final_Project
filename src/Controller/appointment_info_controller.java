@@ -3,6 +3,7 @@ package Controller;
 import Database.CustomerDao;
 import Database.appointmentDao;
 import Model.*;
+import Utility.timezones;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -119,6 +120,10 @@ public class appointment_info_controller implements Initializable {
     int custID;
     int contID;
     int userID;
+    LocalTime beginOfDay = LocalTime.of(8,0);
+    LocalTime endOfDay = LocalTime.of(22,0);
+    LocalDateTime beginToEST = timezones.localToEST(LocalDate.now(), beginOfDay);
+    LocalDateTime endToEST = timezones.localToEST(LocalDate.now(), endOfDay);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -173,6 +178,7 @@ public class appointment_info_controller implements Initializable {
     }
 
     public void setUpdateAppointment() {
+        startCombo.getItems().clear();
         selectedAppointment = (appointment) appointmentTable.getSelectionModel().getSelectedItem();
         custID = selectedAppointment.getCustomerID();
         contID = selectedAppointment.getContactID();
@@ -188,14 +194,11 @@ public class appointment_info_controller implements Initializable {
         }
 
 
-        LocalTime begin = LocalTime.of(0,0);
-        LocalTime endOfDay = LocalTime.of(23,0);
-
-
-        while(begin.isBefore(endOfDay)){
-            begin = begin.plusHours(1);
-            startCombo.getItems().add(begin);
-            endCombo.getItems().add(begin);
+        LocalTime beginTime = beginToEST.toLocalTime();
+        LocalTime endingTime = endToEST.toLocalTime();
+        while(beginTime.isBefore(endingTime)){
+            startCombo.getItems().add(beginTime);
+            beginTime = beginTime.plusHours(1);
         }
 
         try{
@@ -234,6 +237,18 @@ public class appointment_info_controller implements Initializable {
         }catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateEndTime(){
+        endCombo.getItems().clear();
+        LocalTime selectedStart = startCombo.getSelectionModel().getSelectedItem();
+        LocalTime initialLoad = selectedStart.plusHours(1);
+        selectedStart = selectedStart.plusHours(1);
+        while(selectedStart.isBefore(endToEST.toLocalTime())){
+            endCombo.getItems().add(selectedStart);
+            selectedStart = selectedStart.plusHours(1);
+        }
+        endCombo.setValue(initialLoad);
     }
 
     public void deleteAppt(ActionEvent actionEvent) throws IOException {

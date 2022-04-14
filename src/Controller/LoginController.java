@@ -173,6 +173,11 @@ public class LoginController implements Initializable{
                 errorAlert.setContentText("Please select a division for this customer in order to continue");
                 errorAlert.showAndWait();
                 break;
+            case 7:
+                infoAlert.setTitle("Alert!");
+                infoAlert.setHeaderText("Appointment happening Soon");
+                infoAlert.setContentText("Please be aware that you have an appointment happening in less than 15 minutes");
+                infoAlert.showAndWait();
         }
         } catch(Exception e){
             System.out.println("wasteful");

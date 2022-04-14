@@ -1,8 +1,10 @@
 package Controller;
 
 import Database.CustomerDao;
+import Database.appointmentDao;
 import Database.countryDao;
 import Database.divisionDao;
+import Model.appointment;
 import Model.country;
 import Model.customer;
 import Model.division;
@@ -21,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import static Controller.LoginController.alertToDisplay;
@@ -82,11 +85,13 @@ public class customerInfoController implements Initializable {
     public static int newID;
 
     ObservableList<customer> customerList = FXCollections.observableArrayList();
+    ObservableList<appointment> appointmentList = FXCollections.observableArrayList();
     customer selectedCustomer;
     int selectedID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        appointmentList.clear();
         userLabel.setText(activeUser.getUserName());
         try {
             customerName.setCellValueFactory(new PropertyValueFactory<>("customer_Name"));
@@ -98,6 +103,15 @@ public class customerInfoController implements Initializable {
             customerCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
             customerTable.setItems(CustomerDao.getAllCustomer(customerList));
             newID = customerList.get(customerList.size()-1).getCustomer_ID() + 1;
+            appointmentDao.getAll(appointmentList);
+            int count = 0;
+            LocalTime below = LocalTime.now().minusMinutes(15);
+            while(count < appointmentList.size()){
+                if(appointmentList.get(count).getStart().toLocalTime().isAfter(below) && appointmentList.get(count).getStart().toLocalTime().isBefore(LocalTime.now())){
+                    alertToDisplay(7);
+                }
+                count += 1;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

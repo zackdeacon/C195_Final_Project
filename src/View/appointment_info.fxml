@@ -56,7 +56,7 @@
       <Label fx:id="custLabel" layoutX="875.0" layoutY="364.0" text="Customer:" />
       <Label fx:id="userLabel" layoutX="875.0" layoutY="404.0" text="User:" />
       <Button layoutX="1049.0" layoutY="661.0" mnemonicParsing="false" onAction="#goBack" text="Go Back" />
-      <ComboBox fx:id="startCombo" layoutX="1094.0" layoutY="440.0" prefHeight="25.0" prefWidth="94.0" />
+      <ComboBox fx:id="startCombo" layoutX="1094.0" layoutY="440.0" prefHeight="25.0" prefWidth="94.0" onAction="#updateEndTime"/>
       <ComboBox fx:id="endCombo" layoutX="1094.0" layoutY="480.0" prefHeight="25.0" prefWidth="94.0" />
    </children>
 </AnchorPane>

@@ -6,6 +6,8 @@ import Model.appointment;
 import Model.contact;
 import Model.customer;
 import Model.user;
+import Utility.timezones;
+import com.sun.prism.shader.AlphaOne_Color_AlphaTest_Loader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -76,18 +79,21 @@ public class create_appointment_controller implements Initializable {
     ObservableList<appointment> apptList = FXCollections.observableArrayList();
     ObservableList<String> typeList = FXCollections.observableArrayList();
     public static int newAppID;
+    LocalTime beginOfDay = LocalTime.of(8,0);
+    LocalTime endOfDay = LocalTime.of(22,0);
+    LocalDateTime beginToEST = timezones.localToEST(LocalDate.now(), beginOfDay);
+    LocalDateTime endToEST = timezones.localToEST(LocalDate.now(), endOfDay);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         activeUserLabel.setText(activeUser.getUserName());
         typeList.add("Work");
         typeList.add("Pleasure");
-        LocalTime begin = LocalTime.of(0,0);
-        LocalTime endOfDay = LocalTime.of(23,0);
-        while(begin.isBefore(endOfDay)){
-            begin = begin.plusHours(1);
-            startTime.getItems().add(begin);
-            endTime.getItems().add(begin);
+        LocalTime beginTime = beginToEST.toLocalTime();
+        LocalTime endingTime = endToEST.toLocalTime();
+        while(beginTime.isBefore(endingTime)){
+            startTime.getItems().add(beginTime);
+            beginTime = beginTime.plusHours(1);
         }
         textType.setItems(typeList);
         try {
@@ -102,9 +108,20 @@ public class create_appointment_controller implements Initializable {
             e.printStackTrace();
         }
         startTime.setValue(LocalTime.MIN);
-        endTime.setValue(LocalTime.MIN);
         newAppID = apptList.get(apptList.size()-1).getAppointmentID() + 1;
         textApptID.setText(String.valueOf(newAppID));
+    }
+
+    public void setEndBox() {
+        endTime.getItems().clear();
+        LocalTime selectedStart = startTime.getSelectionModel().getSelectedItem();
+        LocalTime initialLoad = selectedStart.plusHours(1);
+        selectedStart = selectedStart.plusHours(1);
+        while(selectedStart.isBefore(endToEST.toLocalTime())){
+            endTime.getItems().add(selectedStart);
+            selectedStart = selectedStart.plusHours(1);
+        }
+        endTime.setValue(initialLoad);
     }
 
 

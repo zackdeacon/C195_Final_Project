@@ -19,7 +19,7 @@
       <ComboBox fx:id="custBox" layoutX="557.0" layoutY="200.0" prefWidth="150.0" />
       <ComboBox fx:id="userBox" layoutX="557.0" layoutY="275.0" prefWidth="150.0" />
       <DatePicker fx:id="startDate" layoutX="470.0" layoutY="350.0" />
-      <ComboBox fx:id="startTime" layoutX="665.0" layoutY="350.0" prefWidth="150.0" />
+      <ComboBox fx:id="startTime" layoutX="665.0" layoutY="350.0" prefWidth="150.0" onAction="#setEndBox"/>
       <DatePicker fx:id="endDate" layoutX="470.0" layoutY="425.0" />
       <ComboBox fx:id="endTime" layoutX="665.0" layoutY="425.0" prefWidth="150.0" />
       <Label layoutX="390.0" layoutY="14.0" text="Create Appointment" />
