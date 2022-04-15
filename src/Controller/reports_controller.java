@@ -129,26 +129,19 @@ public class reports_controller implements Initializable {
 
     public void appointmentByType(ActionEvent actionEvent) throws Exception {
         String type = typeBox.getSelectionModel().getSelectedItem();
-        int numReports = reportsDao.getApptByType(type);
-        typeLabel.setText("Total " + type + " Appointments: ");
-        typeNum.setText(String.valueOf(numReports));
-    }
-
-    public void apptByMonth(ActionEvent actionEvent) throws Exception {
+        ObservableList<appointment> apptType = reportsDao.getApptByType(type);
         int count = 0;
         Month selectedMonth = monthBox.getSelectionModel().getSelectedItem();
-        apptList.clear();
-        appointmentDao.getAll(apptList);
-        for(appointment a : apptList) {
+        for(appointment a : apptType) {
             Month month = a.getStartDate().getMonth();
             if(month == selectedMonth) {
                 count+=1;
             }
         }
-        monthLabel.setText("Total Appointments for the month of: " + selectedMonth);
-        monthNum.setText(String.valueOf(count));
-
+        typeLabel.setText("Total " + type + " Appointments in the month of: " + selectedMonth);
+        typeNum.setText(String.valueOf(count));
     }
+    
 
     public void schedByContact() throws Exception {
         apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));

@@ -9,10 +9,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.reports_controller">
    <children>
-      <Button layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#appointmentByType" text="Customer Appointments by Type" />
-      <Button layoutX="14.0" layoutY="145.0" mnemonicParsing="false" onAction="#apptByMonth" text="Customer Appointments by Month" />
-      <ComboBox fx:id="typeBox" layoutX="227.0" layoutY="101.0" prefWidth="150.0" />
-      <ComboBox fx:id="monthBox" layoutX="227.0" layoutY="145.0" prefWidth="150.0" />
+      <Button layoutX="19.0" layoutY="101.0" mnemonicParsing="false" onAction="#appointmentByType" text="Customer Appointments by Type and Month" />
+      <ComboBox fx:id="typeBox" layoutX="181.0" layoutY="137.0" prefWidth="150.0" />
+      <ComboBox fx:id="monthBox" layoutX="19.0" layoutY="137.0" prefWidth="150.0" />
       <Label fx:id="typeLabel" layoutX="520.0" layoutY="105.0" text="" />
       <Label fx:id="typeNum" layoutX="839.0" layoutY="105.0" text="" />
       <Label fx:id="monthLabel" layoutX="520.0" layoutY="149.0" text="" />

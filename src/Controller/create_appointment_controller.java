@@ -31,6 +31,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import static Controller.LoginController.activeUser;
+import static Controller.LoginController.alertToDisplay;
 
 public class create_appointment_controller implements Initializable {
 
@@ -96,20 +97,27 @@ public class create_appointment_controller implements Initializable {
             beginTime = beginTime.plusHours(1);
         }
         textType.setItems(typeList);
+        textType.setValue(typeList.get(0));
         try {
         contactBox.getItems().clear();
         contactBox.setItems(appointmentDao.getAllContacts(contList));
+        contactBox.setValue(contList.get(0));
         userBox.getItems().clear();
         userBox.setItems(appointmentDao.getAllUser(userList));
+        userBox.setValue(userList.get(0));
         custBox.getItems().clear();
         custBox.setItems(CustomerDao.getAllCustomer(custList));
+        custBox.setValue(custList.get(0));
         appointmentDao.getAll(apptList);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        startTime.setValue(LocalTime.MIN);
+        startDate.setValue(LocalDate.now());
+        endDate.setValue(LocalDate.now().plusDays(1));
+        startTime.setValue(beginToEST.toLocalTime());
         newAppID = apptList.get(apptList.size()-1).getAppointmentID() + 1;
         textApptID.setText(String.valueOf(newAppID));
+        setEndBox();
     }
 
     public void setEndBox() {
@@ -138,14 +146,38 @@ public class create_appointment_controller implements Initializable {
         int customerID = custBox.getSelectionModel().getSelectedItem().getCustomer_ID();
         int userID = userBox.getSelectionModel().getSelectedItem().getUserID();
         int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
-        appointmentDao.insertAppointment(title, description, location, type, start, end, user, customerID, userID, contactID);
+        boolean cleared = false;
+        if(title.equals("") || description.equals("") || location.equals("")){
+            alertToDisplay(8);
+        } else {
+            ObservableList<appointment> overlap = appointmentDao.getAllByCustID(customerID);
+            for(int i =0; i < overlap.size(); i++){
+                if( (start.isAfter(overlap.get(i).getStart())||start.isEqual(overlap.get(i).getStart())) && start.isBefore(overlap.get(i).getEnd())){
+                    alertToDisplay(9);
+                    cleared = false;
+                    break;
+                } else if(end.isAfter(overlap.get(i).getStart())&&(end.isBefore(overlap.get(i).getEnd())||end.isEqual(overlap.get(i).getEnd()))){
+                    alertToDisplay(9);
+                    cleared = false;
+                    break;
+                } else if((start.isBefore(overlap.get(i).getStart())||start.isEqual(overlap.get(i).getStart()))&&(end.isAfter(overlap.get(i).getEnd())||end.isEqual(overlap.get(i).getEnd()))){
+                    alertToDisplay(9);
+                    cleared = false;
+                    break;
+                }
+                cleared = true;
+            }
+            if(cleared == true) {
+                appointmentDao.insertAppointment(title, description, location, type, start, end, user, customerID, userID, contactID);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1300, 950);
-        stage.setTitle("Appointment Info Page");
-        stage.setScene(scene);
-        stage.show();
+                Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 1300, 950);
+                stage.setTitle("Appointment Info Page");
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
     }
 
     public void goBackButton(ActionEvent actionEvent) throws IOException {

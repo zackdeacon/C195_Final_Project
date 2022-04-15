@@ -77,6 +77,9 @@ public class customerInfoController implements Initializable {
     public Label userLabel;
 
     @FXML
+    public Label apptWarningLabel;
+
+    @FXML
     public ComboBox<country> updateCountry;
 
     @FXML
@@ -106,11 +109,12 @@ public class customerInfoController implements Initializable {
             appointmentDao.getAll(appointmentList);
             int count = 0;
             LocalTime range = LocalTime.now().plusMinutes(15);
-           // System.out.println("below time: " + below);
+
             while(count < appointmentList.size()){
                // System.out.println("appt: " + appointmentList.get(count).getStart().toLocalTime());
                 if(appointmentList.get(count).getStart().toLocalTime().isAfter(LocalTime.now()) && appointmentList.get(count).getStart().toLocalTime().isBefore(range)){
                     alertToDisplay(7);
+                    apptWarningLabel.setText("Apppointment ID: " + appointmentList.get(count).getAppointmentID() + " is beginning at " + appointmentList.get(count).getStart().toLocalTime() + " on " + appointmentList.get(count).getStartDate());
                 }
                 count += 1;
             }

@@ -178,6 +178,19 @@ public class LoginController implements Initializable{
                 infoAlert.setHeaderText("Appointment happening Soon");
                 infoAlert.setContentText("Please be aware that you have an appointment happening in less than 15 minutes");
                 infoAlert.showAndWait();
+                break;
+            case 8:
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Incomplete information");
+                errorAlert.setContentText("Please enter information in all text fields");
+                errorAlert.showAndWait();
+                break;
+            case 9:
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Overlapping Appointments");
+                errorAlert.setContentText("This appointment overlaps with another appointment on this customer's schedule");
+                errorAlert.showAndWait();
+                break;
         }
         } catch(Exception e){
             System.out.println("wasteful");
