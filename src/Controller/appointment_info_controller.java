@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import static Controller.LoginController.activeUser;
+import static Controller.LoginController.alertToDisplay;
 
 public class appointment_info_controller implements Initializable {
 
@@ -283,6 +284,9 @@ public class appointment_info_controller implements Initializable {
     }
 
     public void updateAppt(ActionEvent actionEvent) throws IOException {
+        if(appointmentTable.getSelectionModel().getSelectedItem() == null){
+            alertToDisplay(10);
+        } else {
         int appID = Integer.parseInt(apptIDText.getText());
         String title = titleText.getText();
         String description = descText.getText();
@@ -294,11 +298,13 @@ public class appointment_info_controller implements Initializable {
         int custID = customerBox.getSelectionModel().getSelectedItem().getCustomer_ID();
         int userID = userBox.getSelectionModel().getSelectedItem().getUserID();
         int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
-        try{
-            appointmentDao.updateAppointmentSQL(appID, title, description, location, type, start, end, userName, custID, userID, contactID);
-        }catch (Exception e) {
-            e.printStackTrace();
+        try {
+                appointmentDao.updateAppointmentSQL(appID, title, description, location, type, start, end, userName, custID, userID, contactID);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 1300, 950);

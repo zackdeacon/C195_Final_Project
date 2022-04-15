@@ -99,7 +99,7 @@ public class appointmentDao {
         try {
             String sqlStmt = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, " +
                     "Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES('" + title + "', '" + description + "', " +
-                    "'" + location + "', '" + type + "', '" + Timestamp.valueOf(start) + "','" + Timestamp.valueOf(end) + "', now(), '" + user + "', now(), '" + user + "', '" + custID + "','" + userID + "','" + contactID + "' );";
+                    "'" + location + "', '" + type + "', '" + start + "','" + end + "', now(), '" + user + "', now(), '" + user + "', '" + custID + "','" + userID + "','" + contactID + "' );";
             Query.makeQuery(sqlStmt);
             return true;
         } catch (Exception e) {

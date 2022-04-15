@@ -191,6 +191,12 @@ public class LoginController implements Initializable{
                 errorAlert.setContentText("This appointment overlaps with another appointment on this customer's schedule");
                 errorAlert.showAndWait();
                 break;
+            case 10:
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Nothing Selected!");
+                errorAlert.setContentText("Please select an appointment to update!");
+                errorAlert.showAndWait();
+                break;
         }
         } catch(Exception e){
             System.out.println("wasteful");
