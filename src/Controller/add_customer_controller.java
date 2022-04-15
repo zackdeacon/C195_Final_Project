@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import static Controller.LoginController.activeUser;
+import static Controller.LoginController.alertToDisplay;
 import static Controller.customerInfoController.newID;
 
 public class add_customer_controller implements Initializable {
@@ -78,23 +79,26 @@ public class add_customer_controller implements Initializable {
     }
 
     public void createNewUser(ActionEvent actionEvent) throws IOException {
-        int selectedCountryID = divisionBox.getSelectionModel().getSelectedItem().getCountryID();
-        int selectedDivisionID = divisionBox.getSelectionModel().getSelectedItem().getDivisionID();
-        int selectedCustomerID = Integer.parseInt(customerID.getText());
-        String selectedName = textName.getText();
-        String selectedAddress = textAdd.getText();
-        String selectedPostal = textPost.getText();
-        String selectedPhone = textPhone.getText();
+        try {
+            int selectedCountryID = divisionBox.getSelectionModel().getSelectedItem().getCountryID();
+            int selectedDivisionID = divisionBox.getSelectionModel().getSelectedItem().getDivisionID();
+            int selectedCustomerID = Integer.parseInt(customerID.getText());
+            String selectedName = textName.getText();
+            String selectedAddress = textAdd.getText();
+            String selectedPostal = textPost.getText();
+            String selectedPhone = textPhone.getText();
 
-        CustomerDao.createCustomerSQL(selectedCustomerID,selectedDivisionID,selectedName,selectedAddress,selectedPostal,selectedPhone,activeUser.getUserName());
+            CustomerDao.createCustomerSQL(selectedCustomerID, selectedDivisionID, selectedName, selectedAddress, selectedPostal, selectedPhone, activeUser.getUserName());
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1150, 750);
-        stage.setTitle("Customer Landing Page");
-        stage.setScene(scene);
-        stage.show();
-
+            Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1150, 750);
+            stage.setTitle("Customer Landing Page");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            alertToDisplay(8);
+        }
     }
 
     public void goBack(ActionEvent actionEvent)throws IOException{

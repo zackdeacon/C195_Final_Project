@@ -197,6 +197,12 @@ public class LoginController implements Initializable{
                 errorAlert.setContentText("Please select an appointment to update!");
                 errorAlert.showAndWait();
                 break;
+            case 11:
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Nothing Selected!");
+                errorAlert.setContentText("Please select an appointment to delete!");
+                errorAlert.showAndWait();
+                break;
         }
         } catch(Exception e){
             System.out.println("wasteful");
