@@ -4,12 +4,18 @@ import Model.appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class reportsDao {
 
+    /**
+     * Collects all Appointment records that match the passed Type and returns the data in a list.
+     *   @param selectedType Strong variable to hold Type.
+     *   @throws IOException, SQLException From FXMLLoader.
+     */
     public static ObservableList<appointment> getApptByType(String selectedType) throws SQLException, Exception {
         ObservableList<appointment> list = FXCollections.observableArrayList();
         JDBC.getConnection();
@@ -34,8 +40,13 @@ public class reportsDao {
         return list;
     }
 
+    /**
+     * Collects all Appointment records that match the passed Contact ID and returns the data in a list.
+     *   @param contact Contact ID variable.
+     *   @param list Observable List to hold Division data.
+     *   @throws IOException, SQLException From FXMLLoader.
+     */
     public static ObservableList getApptByContact(int contact, ObservableList list) throws SQLException, Exception {
-        int count =0;
         JDBC.getConnection();
         String sqlstmt = "SELECT * from appointments WHERE Contact_ID = '" + contact + "';";
         Query.makeQuery(sqlstmt);
