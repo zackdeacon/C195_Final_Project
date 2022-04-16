@@ -21,7 +21,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -29,72 +28,137 @@ import java.time.Month;
 import java.util.ResourceBundle;
 
 public class reports_controller implements Initializable {
-
+    /**
+     * The Type Combo Box.
+     */
     @FXML
     public ComboBox<String> typeBox;
-
+    /**
+     * The Month Combo Box.
+     */
     @FXML
     public ComboBox<Month> monthBox;
-
+    /**
+     * The Contact Combo Box.
+     */
     @FXML
     public ComboBox<contact> contactBox;
-
+    /**
+     * The Country Combo Box.
+     */
     @FXML
     public ComboBox<country> countryBox;
-
+    /**
+     * The Type Label.
+     */
     @FXML
     public Label typeLabel;
-
+    /**
+     * The Number of Type Label.
+     */
     @FXML
     public Label typeNum;
-
+    /**
+     * The Month Label.
+     */
     @FXML
     public Label monthLabel;
-
+    /**
+     * The Number of Month Label.
+     */
     @FXML
     public Label monthNum;
-
+    /**
+     * The Schedule Table View.
+     */
     @FXML
     public TableView tableSched;
-
+    /**
+     * The Appointment ID Table Column.
+     */
     @FXML
     public TableColumn apptID;
-
+    /**
+     * The Title Table Column.
+     */
     @FXML
     public TableColumn Title;
-
+    /**
+     * The Type Table Column.
+     */
     @FXML
     public TableColumn Type;
-
+    /**
+     * The Description Table Column.
+     */
     @FXML
     public TableColumn Desc;
-
+    /**
+     * The Start Table Column.
+     */
     @FXML
     public TableColumn start;
-
-
+    /**
+     * The End Table Column.
+     */
     @FXML
     public TableColumn end;
-
+    /**
+     * The Customer ID Table Column.
+     */
     @FXML
     public TableColumn custID;
-
+    /**
+     * The Customer Label.
+     */
     @FXML
     public Label customerLabel;
-
+    /**
+     * The Customer Number Label.
+     */
     @FXML
     public Label customerNum;
-
+    /**
+     * The Schedule Label.
+     */
     @FXML
     public Label contactSchedLabel;
 
+    /**
+     * Observable List of Contacts.
+     */
     ObservableList<contact> contList = FXCollections.observableArrayList();
+    /**
+     * Observable List of Countries.
+     */
     ObservableList<country> countryOptions = FXCollections.observableArrayList();
+    /**
+     * Observable List of Customers.
+     */
     ObservableList<customer> customerList = FXCollections.observableArrayList();
+    /**
+     * Observable List of Types.
+     */
     ObservableList<String> typeList = FXCollections.observableArrayList();
+    /**
+     * Observable List of Appointments.
+     */
     ObservableList<appointment> apptList = FXCollections.observableArrayList();
+    /**
+     * Observable List of Months.
+     */
     ObservableList<Month> monthList = FXCollections.observableArrayList();
+    /**
+     * Observable List of Appointments.
+     */
     ObservableList<appointment> apptByContactList = FXCollections.observableArrayList();
+
+    /**
+     * Initializes controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         typeList.add("Work");
@@ -127,6 +191,11 @@ public class reports_controller implements Initializable {
         }
     }
 
+    /**
+     * Computes the number of Appointments by a certain Type.
+     * @param actionEvent Part search button action.
+     * @throws IOException From FXMLLoader.
+     */
     public void appointmentByType(ActionEvent actionEvent) throws Exception {
         String type = typeBox.getSelectionModel().getSelectedItem();
         ObservableList<appointment> apptType = reportsDao.getApptByType(type);
@@ -141,8 +210,11 @@ public class reports_controller implements Initializable {
         typeLabel.setText("Total " + type + " Appointments in the month of: " + selectedMonth);
         typeNum.setText(String.valueOf(count));
     }
-    
 
+    /**
+     * Set's the Schedule table view with data from selected Contact.
+     * @throws IOException From FXMLLoader.
+     */
     public void schedByContact() throws Exception {
         apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         Title.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -159,6 +231,10 @@ public class reports_controller implements Initializable {
         contactSchedLabel.setText("See " + ContactName + "'s schedule below:");
     }
 
+    /**
+     * Sends the customer data by selected Country.
+     * @throws IOException From FXMLLoader.
+     */
     public void customerByCountry() throws Exception {
         String country = countryBox.getSelectionModel().getSelectedItem().getCountryName();
         int countryID = countryBox.getSelectionModel().getSelectedItem().getCountryID();
@@ -174,6 +250,11 @@ public class reports_controller implements Initializable {
         customerNum.setText(String.valueOf(count));
     }
 
+    /**
+     * Navigates user to the Customer Info page.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void goBack(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -183,6 +264,9 @@ public class reports_controller implements Initializable {
         stage.show();
     }
 
+    /**
+     * Closes the Application.
+     */
     public void close() {
         System.exit(0);
     }

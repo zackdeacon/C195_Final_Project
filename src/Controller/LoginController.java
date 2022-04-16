@@ -3,7 +3,6 @@ package Controller;
 import Database.UserDao;
 import Model.user;
 import Utility.filewriter;
-import Utility.timezones;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,49 +15,78 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-import static java.time.ZoneOffset.UTC;
-
 public class LoginController implements Initializable{
+    /**
+     * The Location Alert Label.
+     */
     @FXML
     public Label locationAlertLabel;
-
+    /**
+     * The Welcome Label.
+     */
     @FXML
     public Label welcomeLabel;
-
+    /**
+     * The User Name Label.
+     */
     @FXML
     public Label userNameLabel;
-
+    /**
+     * The Password Label.
+     */
     @FXML
     public Label passwordLabel;
-
+    /**
+     * The Location Label.
+     */
     @FXML
     public Label locationLabel;
-
+    /**
+     * The Login Button.
+     */
     @FXML
     public Button loginButton;
-
+    /**
+     * The Exit Button.
+     */
     @FXML
     public Button exitButton;
-
+    /**
+     * The User Name Text Field.
+     */
     @FXML
     public TextField userNameText;
-
+    /**
+     * The Password Text Field.
+     */
     @FXML
     public TextField passwordText;
-
+    /**
+     * Variable to hold Active User.
+     */
     static user activeUser;
+    /**
+     * Variable to hold today's Date.
+     */
     LocalDate date = LocalDate.now();
+    /**
+     * Variable to hold today's current Time.
+     */
     LocalTime time = LocalTime.now();
 
+    /**
+     * Initializes controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguage();
@@ -68,6 +96,9 @@ public class LoginController implements Initializable{
 //        System.out.println(timezones.utcToLocal(date, time));
     }
 
+    /**
+     * Set's the language based on user's computer settings and location.
+     */
     public void setLanguage() {
       // Locale.setDefault(new Locale("fr", "FR"));
         try{
@@ -85,6 +116,9 @@ public class LoginController implements Initializable{
     }
    }
 
+    /**
+     * Validates user log in credentials and then loads Customer Info page.
+     */
    public void loginAttempt(ActionEvent actionEvent) throws IOException {
         String enteredName = userNameText.getText().toLowerCase();
         String enteredPassword = passwordText.getText();
@@ -116,10 +150,18 @@ public class LoginController implements Initializable{
        }
    }
 
+    /**
+     * Closes Program.
+     */
     public void exitProgram() {
         System.exit(0);
     }
 
+    /**
+     * Navigates user to the Create User page.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void createUser(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/create_user_form.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -129,6 +171,10 @@ public class LoginController implements Initializable{
         stage.show();
     }
 
+    /**
+     * defines different error handling alerts to be used throughout the program.
+     *   @param alertNum number that is passed to switch case to determine which alert to give.
+     */
     public static void alertToDisplay(int alertNum){
         try{
             ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
