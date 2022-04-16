@@ -30,68 +30,127 @@ import static Controller.LoginController.alertToDisplay;
 import static Controller.LoginController.activeUser;
 
 public class customerInfoController implements Initializable {
-
+    /**
+     * Observable list of Country Objects.
+     */
     ObservableList<country> countryOptions = FXCollections.observableArrayList();
+    /**
+     * Observable list of Division Objects.
+     */
     ObservableList<division> divisionOptions = FXCollections.observableArrayList();
-
+    /**
+     * The Name Text Field.
+     */
     @FXML
     public TextField textName;
-
+    /**
+     * The ID Text Field.
+     */
     @FXML
     public TextField textID;
-
+    /**
+     * The Address Text Field.
+     */
     @FXML
     public TextField textAddress;
-
+    /**
+     * The Phone Number Text Field.
+     */
     @FXML
     public TextField textPhone;
-
+    /**
+     * The Postal Code Text Field.
+     */
     @FXML
     public TextField textPostalCode;
-
+    /**
+     * The Customer Table View.
+     */
     @FXML
     public TableView customerTable;
-
+    /**
+     * The Customer Name Table Column.
+     */
     @FXML
     public TableColumn customerName;
-
+    /**
+     * The Customer ID Table Column.
+     */
     @FXML
     public TableColumn customerID;
-
+    /**
+     * The Customer Address Table Column.
+     */
     @FXML
     public TableColumn customerAddress;
-
+    /**
+     * The Customer Postal Code Table Column.
+     */
     @FXML
     public TableColumn customerPostalCode;
-
+    /**
+     * The Customer Phone Number Table Column.
+     */
     @FXML
     public TableColumn customerPhone;
-
+    /**
+     * The Customer Division Table Column.
+     */
     @FXML
     public TableColumn customerDivision;
-
+    /**
+     * The Customer Country Table Column.
+     */
     @FXML
     public TableColumn customerCountry;
-
+    /**
+     * The User Label.
+     */
     @FXML
     public Label userLabel;
-
+    /**
+     * The Appointment Warning Label.
+     */
     @FXML
     public Label apptWarningLabel;
-
+    /**
+     * The Country Combo Box.
+     */
     @FXML
     public ComboBox<country> updateCountry;
-
+    /**
+     * The Division Combo Box.
+     */
     @FXML
     public ComboBox<division> updateDivision;
-
+    /**
+     * Variable to hold new ID.
+     */
     public static int newID;
 
+    /**
+     * Observable List of Customers.
+     */
     ObservableList<customer> customerList = FXCollections.observableArrayList();
+    /**
+     * Observable List of Appointments.
+     */
     ObservableList<appointment> appointmentList = FXCollections.observableArrayList();
+    /**
+     * The Selected Customer.
+     */
     customer selectedCustomer;
+    /**
+     * Variable to hold selected ID.
+     */
     int selectedID;
 
+    /**
+     * Initializes controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appointmentList.clear();
@@ -123,6 +182,10 @@ public class customerInfoController implements Initializable {
         }
 
     }
+
+    /**
+     * Updates the GUI field options with selected customers data for user to update.
+     */
     public void updateCustomer() {
        selectedCustomer = (customer) customerTable.getSelectionModel().getSelectedItem();
            textName.setText(selectedCustomer.getCustomer_Name());
@@ -153,6 +216,9 @@ public class customerInfoController implements Initializable {
            }
     }
 
+    /**
+     * Updates Division Combo Box based on the selected Country.
+     */
     public void selectDivisionByCountry(ActionEvent actionEvent) throws IOException {
        int updatedCountry = updateCountry.getSelectionModel().getSelectedItem().getCountryID();
         updateDivision.getItems().clear();
@@ -163,7 +229,9 @@ public class customerInfoController implements Initializable {
         }
     }
 
-
+    /**
+     * Saves updates made by the user for the selected customer to the Database.
+     */
     public void completeUpdatedCustomer() {
         if(selectedCustomer == null){
             alertToDisplay(5);
@@ -187,6 +255,11 @@ public class customerInfoController implements Initializable {
         }
     }
 
+    /**
+     * Deletes the selected customer from the database and then reloads the page.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void deleteCustomer(ActionEvent actionEvent) throws IOException {
         try {
             int custID = selectedCustomer.getCustomer_ID();
@@ -213,6 +286,11 @@ public class customerInfoController implements Initializable {
         }
     }
 
+    /**
+     * Navigates user to the reports page.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void toReports(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/view/reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -222,6 +300,11 @@ public class customerInfoController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Navaigates user to the Add Customer page.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void goToAddCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/add_customer_form.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -231,6 +314,12 @@ public class customerInfoController implements Initializable {
         stage.show();
     }
 
+
+    /**
+     * Navigates user to the Appointment Info page.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void goToAppointments(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -240,6 +329,9 @@ public class customerInfoController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Closes the program.
+     */
     public void exitProgram() {
         System.exit(0);
     }

@@ -7,7 +7,6 @@ import Model.contact;
 import Model.customer;
 import Model.user;
 import Utility.timezones;
-import com.sun.prism.shader.AlphaOne_Color_AlphaTest_Loader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,57 +33,117 @@ import static Controller.LoginController.activeUser;
 import static Controller.LoginController.alertToDisplay;
 
 public class create_appointment_controller implements Initializable {
-
+    /**
+     * The Active User Label.
+     */
     @FXML
     public Label activeUserLabel;
-
+    /**
+     * The Appointment ID Text Field.
+     */
     @FXML
     public TextField textApptID;
-
+    /**
+     * The Title Text Field.
+     */
     @FXML
     public TextField textTitle;
-
+    /**
+     * The Description Text Field.
+     */
     @FXML
     public TextField textDesc;
-
+    /**
+     * The Location Text Field.
+     */
     @FXML
     public TextField textLoc;
-
+    /**
+     * The Type Text Field.
+     */
     @FXML
     public ComboBox textType;
-
+    /**
+     * The Start Date Picker.
+     */
     @FXML
     public DatePicker startDate;
-
+    /**
+     * The End Date Picker.
+     */
     @FXML
     public DatePicker endDate;
-
+    /**
+     * The Contact Combo Box.
+     */
     @FXML
     public ComboBox<contact> contactBox;
-
+    /**
+     * The Customer Combo Box.
+     */
     @FXML
     public ComboBox<customer> custBox;
-
+    /**
+     * The User Combo Box.
+     */
     @FXML
     public ComboBox<user> userBox;
-
+    /**
+     * The Start Time Combo Box.
+     */
     @FXML
     public ComboBox<LocalTime> startTime;
-
+    /**
+     * The End Time Combo Box.
+     */
     @FXML
     public ComboBox<LocalTime> endTime;
-
+    /**
+     * An observable list of Contacts.
+     */
     ObservableList<contact> contList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Customers.
+     */
     ObservableList<customer> custList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Users.
+     */
     ObservableList<user> userList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Appointments.
+     */
     ObservableList<appointment> apptList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Types.
+     */
     ObservableList<String> typeList = FXCollections.observableArrayList();
+    /**
+     * Variable to hold new Appointment ID.
+     */
     public static int newAppID;
+    /**
+     * Variable to hold beginning of day time.
+     */
     LocalTime beginOfDay = LocalTime.of(8,0);
+    /**
+     * Variable to hold end of day time.
+     */
     LocalTime endOfDay = LocalTime.of(22,0);
+    /**
+     * Variable to hold beginning of day in Eastern time.
+     */
     LocalDateTime beginToEST = timezones.localToEST(LocalDate.now(), beginOfDay);
+    /**
+     * Variable to hold end of day in Eastern Time.
+     */
     LocalDateTime endToEST = timezones.localToEST(LocalDate.now(), endOfDay);
-
+    /**
+     * Initializes controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         activeUserLabel.setText(activeUser.getUserName());
@@ -119,7 +178,9 @@ public class create_appointment_controller implements Initializable {
         textApptID.setText(String.valueOf(newAppID));
         setEndBox();
     }
-
+    /**
+     * Updates the end time Combo Box when the based on the selected start time.
+     */
     public void setEndBox() {
         endTime.getItems().clear();
         LocalTime selectedStart = startTime.getSelectionModel().getSelectedItem();
@@ -132,10 +193,12 @@ public class create_appointment_controller implements Initializable {
         endTime.setValue(initialLoad);
     }
 
-
+    /**
+     * Creates and saves a new Appointmnet to the database.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void createAppt(ActionEvent actionEvent) throws Exception {
-        //TODO
-        //Make sure pre loaded fields are refreshing correctly
         String title = textTitle.getText();
         String description = textDesc.getText();
         String location = textLoc.getText();
@@ -180,6 +243,11 @@ public class create_appointment_controller implements Initializable {
         }
     }
 
+    /**
+     * Navigates user to the Appointment Info form.
+     * @param actionEvent Part search button action.
+     *  @throws IOException From FXMLLoader.
+     */
     public void goBackButton(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -189,6 +257,9 @@ public class create_appointment_controller implements Initializable {
         stage.show();
     }
 
+    /**
+     * Closes the program.
+     */
     public void toExit() {
         System.exit(0);
     }

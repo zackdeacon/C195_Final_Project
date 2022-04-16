@@ -29,103 +29,208 @@ import static Controller.LoginController.activeUser;
 import static Controller.LoginController.alertToDisplay;
 
 public class appointment_info_controller implements Initializable {
-
+    /**
+     * The appointment Table View .
+     */
     @FXML
     public TableView appointmentTable;
-
+    /**
+     * The Appointment ID Table Column.
+     */
     @FXML
     public TableColumn appIDCol;
-
+    /**
+     * The Title Table Column.
+     */
     @FXML
     public TableColumn titleCol;
-
+    /**
+     * The Description Table Column.
+     */
     @FXML
     public TableColumn descCol;
-
+    /**
+     * The Location Table Column.
+     */
     @FXML
     public TableColumn locCol;
-
+    /**
+     * The Contact Table Column.
+     */
     @FXML
     public TableColumn contactCol;
-
+    /**
+     * The Type Table Column.
+     */
     @FXML
     public TableColumn typeCol;
-
+    /**
+     * The Start Table Column.
+     */
     @FXML
     public TableColumn startCol;
-
+    /**
+     * The End Table Column.
+     */
     @FXML
     public TableColumn endCol;
-
+    /**
+     * The Customer Table Column.
+     */
     @FXML
     public TableColumn custCol;
-
+    /**
+     * The User ID Table Column.
+     */
     @FXML
     public TableColumn userCol;
-
+    /**
+     * The Selected User Label.
+     */
     @FXML
     public Label userSelectedLabel;
-
+    /**
+     * The Title Text Field.
+     */
     @FXML
     public TextField titleText;
-
+    /**
+     * The Description Text Field.
+     */
     @FXML
     public TextField descText;
-
+    /**
+     * The Location Text Field.
+     */
     @FXML
     public TextField locText;
-
+    /**
+     * The Appointment ID Text Field.
+     */
     @FXML
     public TextField apptIDText;
-
+    /**
+     * The Type Combo Box.
+     */
     @FXML
     public ComboBox<String> typeText;
-
+    /**
+     * The Contact Combo Box.
+     */
     @FXML
     public ComboBox<contact> contactBox;
-
+    /**
+     * The Customer Combo Box.
+     */
     @FXML
     public ComboBox<customer> customerBox;
-
+    /**
+     * The User Combo Box.
+     */
     @FXML
     public ComboBox<user> userBox;
-
+    /**
+     * The Start Combo Box.
+     */
     @FXML
     public ComboBox<LocalTime> startCombo;
-
+    /**
+     * The End Combo Box.
+     */
     @FXML
     public ComboBox<LocalTime> endCombo;
-
+    /**
+     * The Monthly view Radio Button.
+     */
     @FXML
     public RadioButton monthlyRadio;
-
+    /**
+     * The Weekly view Radio Button.
+     */
     @FXML
     public RadioButton weeklyRadio;
-
+    /**
+     * The Start Date Picker.
+     */
     @FXML
     public DatePicker startDate;
-
+    /**
+     * The End Date Picker.
+     */
     @FXML
     public DatePicker endDate;
 
-
+    /**
+     * An observable list of Appointments.
+     */
     ObservableList<appointment> apptList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Contacts.
+     */
     ObservableList<contact> contList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Customers.
+     */
     ObservableList<customer> custList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Users.
+     */
     ObservableList<user> userList = FXCollections.observableArrayList();
+    /**
+     * An observable list of Type selections.
+     */
     ObservableList<String> typeList = FXCollections.observableArrayList();
+    /**
+     * A Local Date Time variable to hold current time and date
+     */
     LocalDateTime today = LocalDateTime.now();
+    /**
+     * A Local Date Time variable to hold one week ahead.
+     */
     LocalDateTime lastDayWeek = LocalDateTime.now().plusDays(7);
+    /**
+     * A Local Date Time variable to hold one month ahead.
+     */
     LocalDateTime lastDayMonth = LocalDateTime.now().plusDays(30);
+    /**
+     * Current selected Appointment.
+     */
     appointment selectedAppointment;
+    /**
+     * Variable to hold Customer ID.
+     */
     int custID;
+    /**
+     * Variable to hold Contact ID.
+     */
     int contID;
+    /**
+     * Variable to hold User ID.
+     */
     int userID;
+    /**
+     * Variable to hold beginning of the day.
+     */
     LocalTime beginOfDay = LocalTime.of(8,0);
+    /**
+     * Variable to hold end of the day.
+     */
     LocalTime endOfDay = LocalTime.of(22,0);
+    /**
+     * Variable to hold beginning of the day in Eastern time.
+     */
     LocalDateTime beginToEST = timezones.localToEST(LocalDate.now(), beginOfDay);
+    /**
+     * Variable to hold end of the day in Eastern time.
+     */
     LocalDateTime endToEST = timezones.localToEST(LocalDate.now(), endOfDay);
 
+    /**
+     * Initializes controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userSelectedLabel.setText(activeUser.getUserName());
@@ -135,7 +240,9 @@ public class appointment_info_controller implements Initializable {
         typeList.add("Pleasure");
     }
 
-
+    /**
+     * When selected, loads the Table View with Appointment data for the next month.
+     */
     public void monthlyView() {
         weeklyRadio.setSelected(false);
         monthlyRadio.setSelected(true);
@@ -157,6 +264,9 @@ public class appointment_info_controller implements Initializable {
         }
     }
 
+    /**
+     * When selected, loads the Table View with Appointment data for the next week.
+     */
     public void weeklyView() {
         monthlyRadio.setSelected(false);
         weeklyRadio.setSelected(true);
@@ -178,6 +288,9 @@ public class appointment_info_controller implements Initializable {
         }
     }
 
+    /**
+     * takes data from selected Appointment and loads it into the GUI for user to maipulate.
+     */
     public void setUpdateAppointment() {
         startCombo.getItems().clear();
         selectedAppointment = (appointment) appointmentTable.getSelectionModel().getSelectedItem();
@@ -239,7 +352,9 @@ public class appointment_info_controller implements Initializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Updates the end time Combo Box when the based on the selected start time.
+     */
     public void updateEndTime(){
         endCombo.getItems().clear();
         LocalTime selectedStart = startCombo.getSelectionModel().getSelectedItem();
@@ -252,6 +367,11 @@ public class appointment_info_controller implements Initializable {
         endCombo.setValue(initialLoad);
     }
 
+    /**
+     * Deletes the selected Appointment by Appointment ID.
+     * @param actionEvent Part search button action.
+     *  @throws IOException From FXMLLoader.
+     */
     public void deleteAppt(ActionEvent actionEvent) throws IOException {
         try {
             int appID = selectedAppointment.getAppointmentID();
@@ -278,6 +398,11 @@ public class appointment_info_controller implements Initializable {
         }
     }
 
+    /**
+     * Navigates user to the Create Appointment form.
+     * @param actionEvent Part search button action.
+     *  @throws IOException From FXMLLoader.
+     */
     public void createAppt(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/create_appointment_form.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -287,6 +412,11 @@ public class appointment_info_controller implements Initializable {
         stage.show();
     }
 
+    /**
+     * Saves the updated Appointment to the database and reloads the page.
+     * @param actionEvent Part search button action.
+     *  @throws IOException From FXMLLoader.
+     */
     public void updateAppt(ActionEvent actionEvent) throws IOException {
         if(appointmentTable.getSelectionModel().getSelectedItem() == null){
             alertToDisplay(10);
@@ -317,10 +447,18 @@ public class appointment_info_controller implements Initializable {
         stage.show();
     }
 
+    /**
+     * Closes the application.
+     */
     public void closeApplication() {
         System.exit(0);
     }
 
+    /**
+     * Navigates the user back to the Customer Info page.
+     * @param actionEvent Part search button action.
+     *  @throws IOException From FXMLLoader.
+     */
     public void goBack(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

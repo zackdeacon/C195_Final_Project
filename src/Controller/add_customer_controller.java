@@ -27,36 +27,76 @@ import static Controller.LoginController.activeUser;
 import static Controller.LoginController.alertToDisplay;
 import static Controller.customerInfoController.newID;
 
-public class add_customer_controller implements Initializable {
+/**
+ * Controller class that provides control logic for the add customer screen of the application.
+ *
+ * @author Zachary Deacon
+ */
 
+public class add_customer_controller implements Initializable {
+    /**
+     * A list of Countries to use to populate Combo Box.
+     */
     ObservableList<country> countryOptions = FXCollections.observableArrayList();
+    /**
+     * A list of Divisions to use to populate Combo Box.
+     */
     ObservableList<division> divisionOptions = FXCollections.observableArrayList();
 
+    /**
+     * The label to show who is logged in.
+     */
     @FXML
     public Label loggedIn;
 
+    /**
+     * The customer ID textfield.
+     */
     @FXML
     public TextField customerID;
 
+    /**
+     * The country Combo Box.
+     */
     @FXML
     public ComboBox<country> countryBox;
 
+    /**
+     * The Division Combo Box.
+     */
     @FXML
     public ComboBox<division> divisionBox;
 
+    /**
+     * The Name textfield.
+     */
     @FXML
     public TextField textName;
 
+    /**
+     * The Address textfield.
+     */
     @FXML
     public TextField textAdd;
 
+    /**
+     * The Postal Code textfield.
+     */
     @FXML
     public TextField textPost;
 
+    /**
+     * The Phone Number textfield.
+     */
     @FXML
     public TextField textPhone;
 
-
+    /**
+     * Initializes controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loggedIn.setText(activeUser.getUserName());
@@ -68,6 +108,9 @@ public class add_customer_controller implements Initializable {
         }
     }
 
+    /**
+     * Sets Division Combo Box to display CDivision options based on selected Country.
+     */
     public void countrySelected(){
         divisionBox.getItems().clear();
         int selectedCountry = countryBox.getSelectionModel().getSelectedItem().getCountryID();
@@ -78,6 +121,12 @@ public class add_customer_controller implements Initializable {
         }
     }
 
+
+    /**
+     * Creates a new user that is stored in the database.
+     *
+     * @param actionEvent Create User button.
+     */
     public void createNewUser(ActionEvent actionEvent) throws IOException {
         try {
             int selectedCountryID = divisionBox.getSelectionModel().getSelectedItem().getCountryID();
@@ -101,6 +150,12 @@ public class add_customer_controller implements Initializable {
         }
     }
 
+    /**
+     * Loads Customer Info page.
+     *
+     * @param actionEvent Passed from parent method.
+     * @throws IOException From FXMLLoader.
+     */
     public void goBack(ActionEvent actionEvent)throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/view/customerInfo.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -110,6 +165,9 @@ public class add_customer_controller implements Initializable {
         stage.show();
     }
 
+    /**
+     * Closes Program.
+     */
     public void depart() {
         System.exit(0);
     }

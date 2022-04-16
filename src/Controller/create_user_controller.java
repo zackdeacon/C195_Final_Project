@@ -11,26 +11,42 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static Controller.LoginController.alertToDisplay;
 
 public class create_user_controller implements Initializable {
-
+    /**
+     * The User Name Text Field.
+     */
     @FXML
     public TextField userNameText;
-
+    /**
+     * The Password Text Field.
+     */
     @FXML
     public TextField passwordText;
 
 
-
+    /**
+     * Initializes controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialized");
     }
 
+
+    /**
+     * Creates and saves a new User to the database.
+     *   @param actionEvent Part search button action.
+     *   @throws IOException From FXMLLoader.
+     */
     public void makeUser(ActionEvent actionEvent) throws Exception {
         if(userNameText.getText().equals("") || passwordText.getText().equals("")){
             alertToDisplay(8);
@@ -46,6 +62,10 @@ public class create_user_controller implements Initializable {
         }
     }
 
+
+    /**
+     * Closes the program.
+     */
     public void exitProgram() {
         System.exit(0);
     }
