@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -133,11 +134,24 @@ public class appointmentDao {
      */
     public static boolean insertAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, String user, int custID, int userID, int contactID) throws SQLException, Exception {
         JDBC.getConnection();
+        String sqlStmt = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, " +
+                "Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES( ?, ?, " +
+                "?, ?, ?,?, now(),?, now(),?, ?, ?,?);";
+        JDBC.makePreparedStatement(sqlStmt, JDBC.getConnection());
+        PreparedStatement query = JDBC.getPreparedStatement();
+        query.setString(1, title);
+        query.setString(2, description);
+        query.setString(3, location);
+        query.setString(4, type);
+        query.setTimestamp(5, Timestamp.valueOf(start));
+        query.setTimestamp(6, Timestamp.valueOf(end));
+        query.setString(7, user);
+        query.setString(8, user);
+        query.setInt(9, custID);
+        query.setInt(10, userID);
+        query.setInt(11, contactID);
         try {
-            String sqlStmt = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, " +
-                    "Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES('" + title + "', '" + description + "', " +
-                    "'" + location + "', '" + type + "', '" + start + "','" + end + "', now(), '" + user + "', now(), '" + user + "', '" + custID + "','" + userID + "','" + contactID + "' );";
-            Query.makeQuery(sqlStmt);
+            query.executeUpdate();
             return true;
         } catch (Exception e) {
             return false;
@@ -158,12 +172,28 @@ public class appointmentDao {
      *   @param title Variable to hold Title.
      *   @throws Exception, SQLException From FXMLLoader.
      */
-    public static void updateAppointmentSQL(int appID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, String userName, int custID, int userID, int contactID) {
+    public static void updateAppointmentSQL(int appID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, String userName, int custID, int userID, int contactID) throws SQLException, Exception{
         JDBC.getConnection();
-        String sqlStmt = "UPDATE appointments SET Title = '" + title + "', Description = '" + description + "', Location = '" + location + "', " +
-                "Type = '" + type + "', Start = '" + Timestamp.valueOf(start) + "', End = '" + Timestamp.valueOf(end) + "', " +
-                "Last_Update = now(), Last_Updated_By = '" + userName + "', Customer_ID = '" + custID + "', User_ID = '" + userID + "', Contact_ID = '" + contactID + "' WHERE Appointment_ID = '" + appID + "';";
-        Query.makeQuery(sqlStmt);
+        String sqlStmt = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, " +
+                "Type = ?, Start = ?, End = ?, " +
+                "Last_Update = now(), Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?;";
+        JDBC.makePreparedStatement(sqlStmt, JDBC.getConnection());
+        PreparedStatement query = JDBC.getPreparedStatement();
+        query.setString(1, title);
+        query.setString(2, description);
+        query.setString(3, location);
+        query.setString(4, type);
+        query.setTimestamp(5, Timestamp.valueOf(start));
+        query.setTimestamp(6, Timestamp.valueOf(end));
+        query.setString(7, userName);
+        query.setInt(8, custID);
+        query.setInt(9, userID);
+        query.setInt(10, contactID);
+        query.setInt(11, appID);
+        try {
+            query.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     /**
