@@ -21,6 +21,11 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller class that provides control logic for the login screen of the application.
+ *
+ * @author Zachary Deacon
+ */
 
 public class LoginController implements Initializable{
     /**
@@ -53,6 +58,11 @@ public class LoginController implements Initializable{
      */
     @FXML
     public Button loginButton;
+    /**
+     * The Create User Button.
+     */
+    @FXML
+    public Button createButton;
     /**
      * The Exit Button.
      */
@@ -90,17 +100,13 @@ public class LoginController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguage();
-//        Should return 9pm day before in New York time
-//        LocalDate date = LocalDate.of(2022,03,25);
-//        LocalTime time = LocalTime.of(01,00);
-//        System.out.println(timezones.utcToLocal(date, time));
     }
 
     /**
      * Set's the language based on user's computer settings and location.
      */
     public void setLanguage() {
-      // Locale.setDefault(new Locale("fr", "FR"));
+       Locale.setDefault(new Locale("fr", "FR"));
         try{
            ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
         welcomeLabel.setText(rb.getString("Welcome!") );
@@ -109,6 +115,7 @@ public class LoginController implements Initializable{
         locationLabel.setText(rb.getString("Location"));
         loginButton.setText(rb.getString("Log-in"));
         exitButton.setText(rb.getString("Exit"));
+        createButton.setText(rb.getString("Create"));
         locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
 
     } catch (Exception e){

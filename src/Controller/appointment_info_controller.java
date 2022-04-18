@@ -28,6 +28,12 @@ import java.util.ResourceBundle;
 import static Controller.LoginController.activeUser;
 import static Controller.LoginController.alertToDisplay;
 
+/**
+ * Controller class that provides control logic for the appointment info screen of the application.
+ *
+ * @author Zachary Deacon
+ */
+
 public class appointment_info_controller implements Initializable {
     /**
      * The appointment Table View .
@@ -290,8 +296,9 @@ public class appointment_info_controller implements Initializable {
 
     /**
      * takes data from selected Appointment and loads it into the GUI for user to maipulate.
+     * Lambda expression used to iterate through selected data and set combo boxes. This reduces code for efficiency
      */
-    public void setUpdateAppointment() {
+    public void setUpdateAppointment() throws Exception {
         startCombo.getItems().clear();
         selectedAppointment = (appointment) appointmentTable.getSelectionModel().getSelectedItem();
         custID = selectedAppointment.getCustomerID();
@@ -328,30 +335,36 @@ public class appointment_info_controller implements Initializable {
             customerBox.setItems(CustomerDao.getAllCustomer(custList));
             typeText.setItems(typeList);
 
-
-            for(contact c : contactBox.getItems()){
-                if(selectedAppointment.getContactID() == c.getContactID()){
+            /** Lambda Expression
+             */
+            contactBox.getItems().forEach( (c) -> {
+                if (selectedAppointment.getContactID() == c.getContactID()) {
                     contactBox.setValue(c);
-                    break;
                 }
-            }
-            for(user u : userBox.getItems()){
+            });
+
+            /** Lambda Expression
+             */
+            userBox.getItems().forEach( (u) -> {
                 if(selectedAppointment.getUserID() == u.getUserID()){
                     userBox.setValue(u);
-                    break;
                 }
-            }
-            for(customer cu : customerBox.getItems()){
+            });
+
+            /** Lambda Expression
+             */
+            customerBox.getItems().forEach( (cu) -> {
                 if(selectedAppointment.getCustomerID() == cu.getCustomer_ID()){
                     customerBox.setValue(cu);
-                    break;
                 }
-            }
+            });
+
 
         }catch(Exception e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Updates the end time Combo Box when the based on the selected start time.
      */
@@ -369,6 +382,7 @@ public class appointment_info_controller implements Initializable {
 
     /**
      * Deletes the selected Appointment by Appointment ID.
+     * Lambda expression used to pass button response to method and choose action. This allows for simplified code
      * @param actionEvent Part search button action.
      *  @throws IOException From FXMLLoader.
      */
@@ -379,6 +393,8 @@ public class appointment_info_controller implements Initializable {
             Alert informAlert = new Alert(Alert.AlertType.INFORMATION);
             confirmAlert.setTitle("Delete Appointment");
             confirmAlert.setHeaderText("You are about to delete " + selectedAppointment.getTitle() + ". Are you sure?");
+            /** Lambda Expression
+             */
             confirmAlert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     informAlert.setTitle("Deleted");

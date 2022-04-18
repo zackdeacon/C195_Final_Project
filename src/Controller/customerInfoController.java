@@ -29,6 +29,12 @@ import java.util.ResourceBundle;
 import static Controller.LoginController.alertToDisplay;
 import static Controller.LoginController.activeUser;
 
+/**
+ * Controller class that provides control logic for the customer info screen of the application.
+ *
+ * @author Zachary Deacon
+ */
+
 public class customerInfoController implements Initializable {
     /**
      * Observable list of Country Objects.

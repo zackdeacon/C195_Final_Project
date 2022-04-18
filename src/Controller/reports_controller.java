@@ -23,9 +23,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
+
+/**
+ * Controller class that provides control logic for the reports screen of the application.
+ *
+ * @author Zachary Deacon
+ */
 
 public class reports_controller implements Initializable {
     /**

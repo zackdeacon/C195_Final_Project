@@ -17,6 +17,12 @@ import java.util.ResourceBundle;
 
 import static Controller.LoginController.alertToDisplay;
 
+/**
+ * Controller class that provides control logic for the create user screen of the application.
+ *
+ * @author Zachary Deacon
+ */
+
 public class create_user_controller implements Initializable {
     /**
      * The User Name Text Field.

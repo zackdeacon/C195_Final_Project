@@ -32,6 +32,12 @@ import java.util.ResourceBundle;
 import static Controller.LoginController.activeUser;
 import static Controller.LoginController.alertToDisplay;
 
+/**
+ * Controller class that provides control logic for the create appointment screen of the application.
+ *
+ * @author Zachary Deacon
+ */
+
 public class create_appointment_controller implements Initializable {
     /**
      * The Active User Label.
