@@ -3,7 +3,6 @@ package Database;
 import Model.country;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,7 +11,7 @@ public class countryDao {
     /**
      * Collects all Country data from the database and returns an Observable list.
      *   @param list Observable list to hold Countries.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getAllCountries(ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();

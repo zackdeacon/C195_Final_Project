@@ -2,12 +2,10 @@ package Database;
 
 import Model.appointment;
 import Model.contact;
-import Model.customer;
 import Model.user;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +20,7 @@ public class appointmentDao {
      *   @param list Observable list to hold Appointments.
      *   @param selectedStart LocalDateTime variable.
      *   @param selectedEnd LocalDateTime variable.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getAllAppt(ObservableList list, LocalDateTime selectedStart, LocalDateTime selectedEnd) throws SQLException, Exception {
         JDBC.getConnection();
@@ -50,7 +48,7 @@ public class appointmentDao {
     /**
      * Collects specific Contact data from the database and returns an Observable list.
      *   @param list PObservable list to hold Appointments.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getAllContacts(ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();
@@ -71,7 +69,7 @@ public class appointmentDao {
     /**
      * Collects specific User data from the database and returns an Observable list.
      *   @param list PObservable list to hold Appointments.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getAllUser(ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();
@@ -92,7 +90,7 @@ public class appointmentDao {
     /**
      * Collects all Appointment data from the database and returns an Observable list.
      *   @param list Observable list to hold Appointments.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getAll(ObservableList list) throws SQLException, Exception {
 
@@ -130,7 +128,7 @@ public class appointmentDao {
      *   @param location Variable to hold Location.
      *   @param description Variable to hold Description.
      *   @param title Variable to hold Title.
-     *   @throws Exception, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static boolean insertAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, String user, int custID, int userID, int contactID) throws SQLException, Exception {
         JDBC.getConnection();
@@ -170,7 +168,7 @@ public class appointmentDao {
      *   @param location Variable to hold Location.
      *   @param description Variable to hold Description.
      *   @param title Variable to hold Title.
-     *   @throws Exception, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static void updateAppointmentSQL(int appID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, String userName, int custID, int userID, int contactID) throws SQLException, Exception{
         JDBC.getConnection();
@@ -199,7 +197,6 @@ public class appointmentDao {
     /**
      * Deletes Appointment that has matching Appointment ID from the database.
      *   @param apptID Variable to hold Appointment ID.
-     *   @throws IOException, SQLException From FXMLLoader.
      */
     public static void deleteAppointment(int apptID) {
         JDBC.getConnection();
@@ -210,7 +207,7 @@ public class appointmentDao {
     /**
      * Collects specific Appointment data from the database that matches the Customer ID passed to method and returns an Observable list.
      *   @param custID PVariable to hold Customer ID.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList<appointment> getAllByCustID(int custID) throws SQLException, Exception {
         ObservableList<appointment> list = FXCollections.observableArrayList();
@@ -239,7 +236,7 @@ public class appointmentDao {
     /**
      * Collects specific Appointment data from the database that matches the Customer ID passed to method and returns an Observable list.
      *   @param ID Variable to hold Customer ID.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getAllExcept(int ID) throws SQLException, Exception {
         ObservableList<appointment> list = FXCollections.observableArrayList();

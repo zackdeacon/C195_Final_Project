@@ -14,7 +14,7 @@ public class reportsDao {
     /**
      * Collects all Appointment records that match the passed Type and returns the data in a list.
      *   @param selectedType Strong variable to hold Type.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList<appointment> getApptByType(String selectedType) throws SQLException, Exception {
         ObservableList<appointment> list = FXCollections.observableArrayList();
@@ -44,7 +44,7 @@ public class reportsDao {
      * Collects all Appointment records that match the passed Contact ID and returns the data in a list.
      *   @param contact Contact ID variable.
      *   @param list Observable List to hold Division data.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getApptByContact(int contact, ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();

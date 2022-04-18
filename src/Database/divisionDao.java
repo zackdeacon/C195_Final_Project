@@ -1,10 +1,8 @@
 package Database;
 
-import Model.country;
 import Model.division;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,7 +12,7 @@ public class divisionDao {
      * Collects all Division records that match the passed ID and returns the data in a list.
      *   @param ID ID variable.
      *   @param list nObservable List to hold Division data.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
         public static ObservableList getAllDivision(ObservableList list, int ID) throws SQLException, Exception {
             JDBC.getConnection();
@@ -39,7 +37,7 @@ public class divisionDao {
     /**
      * Collects all Division records and returns the data in a list.
      *   @param list nObservable List to hold Division data.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getTotalDivision(ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();

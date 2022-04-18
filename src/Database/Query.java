@@ -23,7 +23,6 @@ public class Query {
     /**
      * Executes a SQL query based on type of String passed to method.
      *   @param q string variable to hold type of query.
-     *   @throws IOException, SQLException From FXMLLoader.
      */
     public static void makeQuery(String q){
         query=q;

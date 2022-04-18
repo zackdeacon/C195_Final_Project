@@ -3,7 +3,6 @@ package Database;
 import Model.customer;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,7 +13,7 @@ public class CustomerDao {
     /**
      * Collects specific Customer data from the database and returns an Observable list.
      *   @param list Observable list to hold Appointments.
-     *   @throws IOException, SQLException From FXMLLoader.
+     *   @throws Exception From FXMLLoader.
      */
     public static ObservableList getAllCustomer(ObservableList list) throws SQLException, Exception {
         JDBC.getConnection();
@@ -51,7 +50,6 @@ public class CustomerDao {
      *   @param phone Phone Number variable.
      *   @param user User variable.
      *   @param divisionID LDivision ID variable.
-     *   @throws IOException, SQLException From FXMLLoader.
      */
     public static void updateCustomerSQL(int ID, String name, String address, String postalCode, String phone, String user, int divisionID) {
         JDBC.getConnection();
@@ -68,7 +66,6 @@ public class CustomerDao {
      *   @param phone Phone Number variable.
      *   @param user User variable.
      *   @param divisionID LDivision ID variable.
-     *   @throws IOException, SQLException From FXMLLoader.
      */
     public static void createCustomerSQL(int customerID, int divisionID, String name, String address, String postalCode, String phone, String user) {
         JDBC.getConnection();
@@ -80,7 +77,6 @@ public class CustomerDao {
     /**
      * Deletes Customer record that matches passed Customer ID from the database.
      *   @param custID Customer ID variable.
-     *   @throws IOException, SQLException From FXMLLoader.
      */
     public static void deleteCustomer(int custID) {
         JDBC.getConnection();

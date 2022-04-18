@@ -125,6 +125,7 @@ public class add_customer_controller implements Initializable {
      * Creates a new user that is stored in the database.
      *
      * @param actionEvent Create User button.
+     * @throws IOException From FXMLLoader.
      */
     public void createNewUser(ActionEvent actionEvent) throws IOException {
         try {

@@ -297,6 +297,7 @@ public class appointment_info_controller implements Initializable {
     /**
      * takes data from selected Appointment and loads it into the GUI for user to maipulate.
      * Lambda expression used to iterate through selected data and set combo boxes. This reduces code for efficiency
+     * @throws Exception From FXMLLoader.
      */
     public void setUpdateAppointment() throws Exception {
         startCombo.getItems().clear();
