@@ -417,34 +417,53 @@ public class appointment_info_controller implements Initializable {
      * @param actionEvent Part search button action.
      *  @throws IOException From FXMLLoader.
      */
-    public void updateAppt(ActionEvent actionEvent) throws IOException {
+    public void updateAppt(ActionEvent actionEvent) throws Exception {
         if(appointmentTable.getSelectionModel().getSelectedItem() == null){
             alertToDisplay(10);
         } else {
-        int appID = Integer.parseInt(apptIDText.getText());
-        String title = titleText.getText();
-        String description = descText.getText();
-        String location = locText.getText();
-        String type = typeText.getSelectionModel().getSelectedItem();
-        LocalDateTime start = LocalDateTime.of(startDate.getValue(), startCombo.getValue());
-        LocalDateTime end = LocalDateTime.of(endDate.getValue(), endCombo.getValue());
-        String userName = activeUser.getUserName();
-        int custID = customerBox.getSelectionModel().getSelectedItem().getCustomer_ID();
-        int userID = userBox.getSelectionModel().getSelectedItem().getUserID();
-        int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
-        try {
-                appointmentDao.updateAppointmentSQL(appID, title, description, location, type, start, end, userName, custID, userID, contactID);
-            } catch (Exception e) {
-                e.printStackTrace();
+            int appID = Integer.parseInt(apptIDText.getText());
+            String title = titleText.getText();
+            String description = descText.getText();
+            String location = locText.getText();
+            String type = typeText.getSelectionModel().getSelectedItem();
+            LocalDateTime start = LocalDateTime.of(startDate.getValue(), startCombo.getValue());
+            LocalDateTime end = LocalDateTime.of(endDate.getValue(), endCombo.getValue());
+            String userName = activeUser.getUserName();
+            int custID = customerBox.getSelectionModel().getSelectedItem().getCustomer_ID();
+            int userID = userBox.getSelectionModel().getSelectedItem().getUserID();
+            int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
+            boolean cleared = false;
+            ObservableList<appointment> overlap = appointmentDao.getAllExcept(selectedAppointment.getAppointmentID());
+            for (int i = 0; i < overlap.size(); i++) {
+                if ((start.isAfter(overlap.get(i).getStart()) || start.isEqual(overlap.get(i).getStart())) && start.isBefore(overlap.get(i).getEnd())) {
+                    alertToDisplay(9);
+                    cleared = false;
+                    break;
+                } else if (end.isAfter(overlap.get(i).getStart()) && (end.isBefore(overlap.get(i).getEnd()) || end.isEqual(overlap.get(i).getEnd()))) {
+                    alertToDisplay(9);
+                    cleared = false;
+                    break;
+                } else if ((start.isBefore(overlap.get(i).getStart()) || start.isEqual(overlap.get(i).getStart())) && (end.isAfter(overlap.get(i).getEnd()) || end.isEqual(overlap.get(i).getEnd()))) {
+                    alertToDisplay(9);
+                    cleared = false;
+                    break;
+                }
+                cleared = true;
+            }
+            if (cleared == true) {
+                try {
+                    appointmentDao.updateAppointmentSQL(appID, title, description, location, type, start, end, userName, custID, userID, contactID);
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
+                    Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root, 1300, 950);
+                    stage.setTitle("Appointment Info Page");
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-        Parent root = FXMLLoader.load(getClass().getResource("/view/appointment_info.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1300, 950);
-        stage.setTitle("Appointment Info Page");
-        stage.setScene(scene);
-        stage.show();
     }
 
     /**

@@ -236,4 +236,33 @@ public class appointmentDao {
         return list;
     }
 
+    /**
+     * Collects specific Appointment data from the database that matches the Customer ID passed to method and returns an Observable list.
+     *   @param ID Variable to hold Customer ID.
+     *   @throws IOException, SQLException From FXMLLoader.
+     */
+    public static ObservableList getAllExcept(int ID) throws SQLException, Exception {
+        ObservableList<appointment> list = FXCollections.observableArrayList();
+        JDBC.getConnection();
+        String sqlstmt = "SELECT * FROM appointments WHERE Appointment_ID NOT IN ('" + ID + "');";
+        Query.makeQuery(sqlstmt);
+        appointment appointmentResult;
+        ResultSet result = Query.getResult();
+        while(result.next()){
+            int appointmentID = result.getInt("Appointment_ID");
+            String title = result.getString("Title");
+            String description = result.getString("Description");
+            String location = result.getString("Location");
+            int contactID = result.getInt("Contact_ID");
+            String type = result.getString("Type");
+            LocalDateTime start = result.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = result.getTimestamp("End").toLocalDateTime();
+            int customerID = result.getInt("Customer_ID");
+            int userID = result.getInt("User_ID");
+            appointmentResult = new appointment(appointmentID, title, description, location, type, start, end, contactID, customerID, userID);
+            list.addAll(appointmentResult);
+        }
+        return list;
+    }
+
 }
