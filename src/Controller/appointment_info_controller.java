@@ -374,7 +374,7 @@ public class appointment_info_controller implements Initializable {
         LocalTime selectedStart = startCombo.getSelectionModel().getSelectedItem();
         LocalTime initialLoad = selectedStart.plusHours(1);
         selectedStart = selectedStart.plusHours(1);
-        while(selectedStart.isBefore(endToEST.toLocalTime())){
+        while(selectedStart.isBefore(endToEST.toLocalTime().plusHours(1))){
             endCombo.getItems().add(selectedStart);
             selectedStart = selectedStart.plusHours(1);
         }
