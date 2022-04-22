@@ -18,6 +18,7 @@ import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -106,7 +107,7 @@ public class LoginController implements Initializable{
      * Set's the language based on user's computer settings and location.
      */
     public void setLanguage() {
-       Locale.setDefault(new Locale("fr", "FR"));
+      // Locale.setDefault(new Locale("fr", "FR"));
         try{
            ResourceBundle rb = ResourceBundle.getBundle("translator", Locale.getDefault());
         welcomeLabel.setText(rb.getString("Welcome!") );
@@ -116,10 +117,10 @@ public class LoginController implements Initializable{
         loginButton.setText(rb.getString("Log-in"));
         exitButton.setText(rb.getString("Exit"));
         createButton.setText(rb.getString("Create"));
-        locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
+        locationAlertLabel.setText(Locale.getDefault().getDisplayCountry() + "; " + TimeZone.getDefault().getDisplayName());
 
     } catch (Exception e){
-        locationAlertLabel.setText(Locale.getDefault().getDisplayCountry());
+        locationAlertLabel.setText(Locale.getDefault().getDisplayCountry() + "; " + TimeZone.getDefault().getDisplayName());
     }
    }
 

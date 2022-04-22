@@ -180,7 +180,11 @@ public class create_appointment_controller implements Initializable {
         startDate.setValue(LocalDate.now());
         endDate.setValue(LocalDate.now().plusDays(1));
         startTime.setValue(beginToEST.toLocalTime());
-        newAppID = apptList.get(apptList.size()-1).getAppointmentID() + 1;
+        if(apptList.size() != 0) {
+            newAppID = apptList.get(apptList.size() - 1).getAppointmentID() + 1;
+        } else {
+            newAppID = 1;
+        }
         textApptID.setText(String.valueOf(newAppID));
         setEndBox();
     }
