@@ -392,14 +392,14 @@ public class appointment_info_controller implements Initializable {
             int appID = selectedAppointment.getAppointmentID();
             Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
             Alert informAlert = new Alert(Alert.AlertType.INFORMATION);
-            confirmAlert.setTitle("Delete Appointment");
-            confirmAlert.setHeaderText("You are about to delete " + selectedAppointment.getTitle() + ". Are you sure?");
+            confirmAlert.setTitle("Delete Appointment ID: " + selectedAppointment.getAppointmentID());
+            confirmAlert.setHeaderText("You are about to delete the " + selectedAppointment.getType() + " appointment titled: " + selectedAppointment.getTitle() + ". Are you sure?");
             /** Lambda Expression
              */
             confirmAlert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
-                    informAlert.setTitle("Deleted");
-                    informAlert.setHeaderText(selectedAppointment.getTitle() + " has been deleted");
+                    informAlert.setTitle("Deleted ID: " + selectedAppointment.getAppointmentID());
+                    informAlert.setHeaderText("The " + selectedAppointment.getType() + " appointment titled: " + selectedAppointment.getTitle() + " has been deleted");
                     informAlert.show();
                     appointmentDao.deleteAppointment(appID);
                 }

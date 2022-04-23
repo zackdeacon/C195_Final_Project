@@ -219,7 +219,7 @@ public class create_appointment_controller implements Initializable {
         int customerID = custBox.getSelectionModel().getSelectedItem().getCustomer_ID();
         int userID = userBox.getSelectionModel().getSelectedItem().getUserID();
         int contactID = contactBox.getSelectionModel().getSelectedItem().getContactID();
-        boolean cleared = false;
+        boolean cleared = true;
         if(title.equals("") || description.equals("") || location.equals("")){
             alertToDisplay(8);
         } else {
